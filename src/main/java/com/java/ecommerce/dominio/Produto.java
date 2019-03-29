@@ -2,7 +2,9 @@ package com.java.ecommerce.dominio;
 
 import java.math.BigDecimal;
 
-import com.java.ecommerce.dominio.excecoes.*;
+import com.java.ecommerce.dominio.excecoes.ExcecaoDeDominio;
+import com.java.ecommerce.dominio.excecoes.ExcecaoDeNomeInvalido;
+import com.java.ecommerce.dominio.excecoes.ExcecaoDeValorInvalido;
 
 public class Produto extends Entidade {
 

@@ -4,7 +4,11 @@ import static org.junit.Assert.assertEquals;
 
 import com.java.ecommerce.builders.ClienteBuilder;
 import com.java.ecommerce.builders.EnderecoBuilder;
-import com.java.ecommerce.dominio.excecoes.*;
+import com.java.ecommerce.dominio.excecoes.ExcecaoDeDominio;
+import com.java.ecommerce.dominio.excecoes.ExcecaoDeEmailInvalido;
+import com.java.ecommerce.dominio.excecoes.ExcecaoDeEnderecoInvalido;
+import com.java.ecommerce.dominio.excecoes.ExcecaoDeNomeInvalido;
+import com.java.ecommerce.dominio.excecoes.ExcecaoDeSenhaInvalida;
 
 import org.junit.Test;
 

@@ -4,7 +4,11 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import com.java.ecommerce.dominio.excecoes.*;
+import com.java.ecommerce.dominio.excecoes.ExcecaoDeDominio;
+import com.java.ecommerce.dominio.excecoes.ExcecaoDeEmailInvalido;
+import com.java.ecommerce.dominio.excecoes.ExcecaoDeEnderecoInvalido;
+import com.java.ecommerce.dominio.excecoes.ExcecaoDeNomeInvalido;
+import com.java.ecommerce.dominio.excecoes.ExcecaoDeSenhaInvalida;
 
 public class Cliente extends Entidade {
 
@@ -21,7 +25,7 @@ public class Cliente extends Entidade {
             throw new ExcecaoDeEmailInvalido();
         if (senha.trim().isEmpty())
             throw new ExcecaoDeSenhaInvalida();
-        if (endereco == null) 
+        if (endereco == null)
             throw new ExcecaoDeEnderecoInvalido();
 
         this.nome = nome;
