@@ -2,7 +2,7 @@ package com.java.ecommerce.builders;
 
 import com.java.ecommerce.dominio.Cliente;
 import com.java.ecommerce.dominio.Endereco;
-import com.java.ecommerce.dominio.excecoes.ExcecaoDeDominio;
+import com.java.ecommerce.dominio.ExcecaoDeDominio;
 
 public class ClienteBuilder {
 
@@ -11,13 +11,15 @@ public class ClienteBuilder {
     private String senha;
     private Endereco endereco;
 
-    public ClienteBuilder() {
+    public ClienteBuilder() throws ExcecaoDeDominio {
         this.nome = "Nome Genérico";
         this.email = "email@generico.com";
         this.senha = "umaSenha";
+        this.endereco = new Endereco("Rua Genérica", "Cidade Genérica", "Bairro Genérico", "00000-000",
+                "Estado Genérico");
     }
 
-    public static ClienteBuilder umCliente() {
+    public static ClienteBuilder umCliente() throws ExcecaoDeDominio {
         return new ClienteBuilder();
     }
 
@@ -40,8 +42,8 @@ public class ClienteBuilder {
         return this;
     }
 
-	public ClienteBuilder comEndereco(Endereco endereco) {
+    public ClienteBuilder comEndereco(Endereco endereco) {
         this.endereco = endereco;
         return this;
-	}
+    }
 }

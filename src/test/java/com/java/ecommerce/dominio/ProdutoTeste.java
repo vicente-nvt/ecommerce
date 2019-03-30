@@ -6,13 +6,16 @@ import static org.junit.Assert.assertTrue;
 import java.math.BigDecimal;
 
 import com.java.ecommerce.builders.ProdutoBuilder;
-import com.java.ecommerce.dominio.excecoes.ExcecaoDeDominio;
-import com.java.ecommerce.dominio.excecoes.ExcecaoDeNomeInvalido;
-import com.java.ecommerce.dominio.excecoes.ExcecaoDeValorInvalido;
+import com.java.ecommerce.dominio.ExcecaoDeDominio;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 public class ProdutoTeste {
+
+    @Rule
+    public ExpectedException excecaoEsperada = ExpectedException.none();
 
     @Test
     public void deveCriarUmProdutoComDescricao() throws ExcecaoDeDominio {
@@ -23,8 +26,10 @@ public class ProdutoTeste {
         assertEquals(descricaoEsperada, produto.getNome());
     }
 
-    @Test(expected = ExcecaoDeNomeInvalido.class)
+    @Test
     public void naoDeveCriarUmProdutoComNomeVazio() throws ExcecaoDeDominio {
+        excecaoEsperada.expect(ExcecaoDeDominio.class);
+        excecaoEsperada.expectMessage("Nome inválido");
         final String descricaoInvalida = " ";
 
         ProdutoBuilder.umProduto().comDescricao(descricaoInvalida).construir();
@@ -39,8 +44,11 @@ public class ProdutoTeste {
         assertTrue(precoEsperado.equals(produto.getPreco()));
     }
 
-    @Test(expected = ExcecaoDeValorInvalido.class)
+    @Test
     public void naoDeveCriarUmProdutoSemPreco() throws ExcecaoDeDominio {
+        excecaoEsperada.expect(ExcecaoDeDominio.class);
+        excecaoEsperada.expectMessage("Preço inválido");
+
         ProdutoBuilder.umProduto().comPreco(null).construir();
     }
 

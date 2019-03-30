@@ -4,12 +4,6 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import com.java.ecommerce.dominio.excecoes.ExcecaoDeDominio;
-import com.java.ecommerce.dominio.excecoes.ExcecaoDeEmailInvalido;
-import com.java.ecommerce.dominio.excecoes.ExcecaoDeEnderecoInvalido;
-import com.java.ecommerce.dominio.excecoes.ExcecaoDeNomeInvalido;
-import com.java.ecommerce.dominio.excecoes.ExcecaoDeSenhaInvalida;
-
 public class Cliente extends Entidade {
 
     private String nome;
@@ -19,14 +13,13 @@ public class Cliente extends Entidade {
 
     public Cliente(String nome, String email, String senha, Endereco endereco) throws ExcecaoDeDominio {
 
-        if (nome.trim().isEmpty())
-            throw new ExcecaoDeNomeInvalido();
-        if (!validarEmail(email))
-            throw new ExcecaoDeEmailInvalido();
-        if (senha.trim().isEmpty())
-            throw new ExcecaoDeSenhaInvalida();
-        if (endereco == null)
-            throw new ExcecaoDeEnderecoInvalido();
+
+        Validacao.validar()
+            .quando(nome.trim().isEmpty(), "Nome inválido")
+            .quando(!validarEmail(email), "E-mail inválido")
+            .quando(senha.trim().isEmpty(), "Senha inválida")
+            .quando(endereco == null, "Endereço inválido")
+            .disparar();
 
         this.nome = nome;
         this.email = email;

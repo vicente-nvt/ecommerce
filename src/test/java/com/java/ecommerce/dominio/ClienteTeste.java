@@ -4,15 +4,15 @@ import static org.junit.Assert.assertEquals;
 
 import com.java.ecommerce.builders.ClienteBuilder;
 import com.java.ecommerce.builders.EnderecoBuilder;
-import com.java.ecommerce.dominio.excecoes.ExcecaoDeDominio;
-import com.java.ecommerce.dominio.excecoes.ExcecaoDeEmailInvalido;
-import com.java.ecommerce.dominio.excecoes.ExcecaoDeEnderecoInvalido;
-import com.java.ecommerce.dominio.excecoes.ExcecaoDeNomeInvalido;
-import com.java.ecommerce.dominio.excecoes.ExcecaoDeSenhaInvalida;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 public class ClienteTeste {
+
+    @Rule
+    public ExpectedException excecaoEsperada = ExpectedException.none();
 
     @Test
     public void deveCriarUmClienteComNome() throws ExcecaoDeDominio {
@@ -23,8 +23,10 @@ public class ClienteTeste {
         assertEquals(nomeEsperado, cliente.getNome());
     }
 
-    @Test(expected = ExcecaoDeNomeInvalido.class)
+    @Test
     public void naoDeveCriarUmClienteComNomeInvalido() throws ExcecaoDeDominio {
+        excecaoEsperada.expect(ExcecaoDeDominio.class);
+        excecaoEsperada.expectMessage("Nome inválido");
         String nomeInvalido = " ";
 
         ClienteBuilder.umCliente().comNome(nomeInvalido).construir();
@@ -39,8 +41,10 @@ public class ClienteTeste {
         assertEquals(emailEsperado, cliente.getEmail());
     }
 
-    @Test(expected = ExcecaoDeEmailInvalido.class)
+    @Test
     public void naoDeveCriarUmClienteComEmailInvalido() throws ExcecaoDeDominio {
+        excecaoEsperada.expect(ExcecaoDeDominio.class);
+        excecaoEsperada.expectMessage("E-mail inválido");
         String emailInvalido = "email inválido";
 
         ClienteBuilder.umCliente().comEmail(emailInvalido).construir();
@@ -56,8 +60,10 @@ public class ClienteTeste {
         assertEquals(senhaEsperada, cliente.getSenha());
     }
 
-    @Test(expected = ExcecaoDeSenhaInvalida.class)
+    @Test
     public void naoDeveCriarUmClienteSemSenha() throws ExcecaoDeDominio {
+        excecaoEsperada.expect(ExcecaoDeDominio.class);
+        excecaoEsperada.expectMessage("Senha inválida");
         String senhaVazia = " ";
 
         ClienteBuilder.umCliente().comSenha(senhaVazia).construir();
@@ -72,8 +78,10 @@ public class ClienteTeste {
         assertEquals(enderecoEsperado, cliente.getEndereco());
     }
 
-    @Test(expected = ExcecaoDeEnderecoInvalido.class)
+    @Test
     public void naoDeveCriarUmClienteComEnderecoNulo() throws ExcecaoDeDominio {
+        excecaoEsperada.expect(ExcecaoDeDominio.class);
+        excecaoEsperada.expectMessage("Endereço inválido");
         Endereco enderecoInvalido = null;
 
         ClienteBuilder.umCliente().comEndereco(enderecoInvalido).construir();

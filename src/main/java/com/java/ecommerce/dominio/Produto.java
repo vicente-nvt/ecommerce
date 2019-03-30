@@ -2,9 +2,7 @@ package com.java.ecommerce.dominio;
 
 import java.math.BigDecimal;
 
-import com.java.ecommerce.dominio.excecoes.ExcecaoDeDominio;
-import com.java.ecommerce.dominio.excecoes.ExcecaoDeNomeInvalido;
-import com.java.ecommerce.dominio.excecoes.ExcecaoDeValorInvalido;
+import com.java.ecommerce.dominio.ExcecaoDeDominio;
 
 public class Produto extends Entidade {
 
@@ -17,10 +15,10 @@ public class Produto extends Entidade {
     public Produto(String descricao, BigDecimal preco, int quantidade, String foto, Categoria categoria)
             throws ExcecaoDeDominio {
 
-        if (descricao.trim().isEmpty())
-            throw new ExcecaoDeNomeInvalido();
-        if (preco == null)
-            throw new ExcecaoDeValorInvalido("Preço inválido");
+        Validacao.validar()
+            .quando(descricao.trim().isEmpty(), "Nome inválido")
+            .quando(preco == null, "Preço inválido")
+            .disparar();
 
         this.nome = descricao;
         this.preco = preco;

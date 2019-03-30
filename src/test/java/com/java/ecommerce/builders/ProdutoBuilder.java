@@ -3,8 +3,8 @@ package com.java.ecommerce.builders;
 import java.math.BigDecimal;
 
 import com.java.ecommerce.dominio.Categoria;
+import com.java.ecommerce.dominio.ExcecaoDeDominio;
 import com.java.ecommerce.dominio.Produto;
-import com.java.ecommerce.dominio.excecoes.ExcecaoDeDominio;
 
 public class ProdutoBuilder {
 
@@ -14,7 +14,7 @@ public class ProdutoBuilder {
     private String foto;
     private Categoria categoria;
 
-    public ProdutoBuilder() {
+    public ProdutoBuilder() throws ExcecaoDeDominio {
         this.nome = "Produto Genérico";
         this.preco = new BigDecimal(1.0);
         this.quantidade = 1;
@@ -22,8 +22,12 @@ public class ProdutoBuilder {
         this.categoria = new Categoria("Categoria Genérica");
     }
 
-    public static ProdutoBuilder umProduto() {
+    public static ProdutoBuilder umProduto() throws ExcecaoDeDominio {
         return new ProdutoBuilder();
+    }
+
+    public Produto construir() throws ExcecaoDeDominio {
+        return new Produto(this.nome, this.preco, this.quantidade, this.foto, this.categoria);
     }
 
     public ProdutoBuilder comDescricao(String nome) {
@@ -41,17 +45,13 @@ public class ProdutoBuilder {
         return this;
     }
 
-    public Produto construir() throws ExcecaoDeDominio {
-        return new Produto(this.nome, this.preco, this.quantidade, this.foto, this.categoria);
-    }
-
-	public ProdutoBuilder comFoto(String foto) {
+    public ProdutoBuilder comFoto(String foto) {
         this.foto = foto;
         return this;
-	}
+    }
 
-	public ProdutoBuilder comCategoria(Categoria categoria) {
+    public ProdutoBuilder comCategoria(Categoria categoria) {
         this.categoria = categoria;
         return this;
-	}
+    }
 }
