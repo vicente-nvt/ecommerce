@@ -1,11 +1,16 @@
 package com.ecommerce.dominio.entidades;
 
+import javax.persistence.Entity;
+
 import com.ecommerce.dominio.ExcecaoDeDominio;
 import com.ecommerce.dominio.Validacao;
 
+@Entity
 public class Categoria extends Entidade {
 
     private String nome;
+
+    private Categoria() { }
 
     public Categoria(String nome) throws ExcecaoDeDominio {
 
