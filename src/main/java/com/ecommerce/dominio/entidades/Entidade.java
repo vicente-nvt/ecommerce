@@ -10,9 +10,9 @@ public class Entidade {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    protected Long Id;
+    protected Long id;
 
     public Long getId() {
-        return this.Id;
-    }    
+        return this.id;
+    }
 }

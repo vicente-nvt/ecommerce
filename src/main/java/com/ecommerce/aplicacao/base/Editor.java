@@ -4,7 +4,7 @@ import com.ecommerce.aplicacao.ExcecaoDeAplicacao;
 
 import javassist.NotFoundException;
 
-public interface Consultor<T> {
+public interface Editor<T> {
 
-    ObjetoDto<T> consultarPor(long id) throws ExcecaoDeAplicacao, NotFoundException;
+    void editar(ObjetoDto<T> dto) throws ExcecaoDeAplicacao, NotFoundException;
 }

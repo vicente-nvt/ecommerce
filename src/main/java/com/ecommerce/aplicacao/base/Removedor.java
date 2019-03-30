@@ -4,7 +4,7 @@ import com.ecommerce.aplicacao.ExcecaoDeAplicacao;
 
 import javassist.NotFoundException;
 
-public interface Consultor<T> {
+public interface Removedor<T> {
 
-    ObjetoDto<T> consultarPor(long id) throws ExcecaoDeAplicacao, NotFoundException;
+    void remover(long id) throws ExcecaoDeAplicacao, NotFoundException;
 }

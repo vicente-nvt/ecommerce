@@ -1,5 +1,6 @@
-package com.ecommerce.aplicacao.dtos;
+package com.ecommerce.aplicacao.categoria;
 
+import com.ecommerce.aplicacao.base.ObjetoDto;
 import com.ecommerce.dominio.entidades.Categoria;
 
 public class CategoriaDto implements ObjetoDto<Categoria> {

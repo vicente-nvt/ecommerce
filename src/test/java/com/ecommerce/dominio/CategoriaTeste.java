@@ -16,11 +16,11 @@ public class CategoriaTeste {
 
     @Test
     public void deveCriarUmaCategoriaComNome() throws ExcecaoDeDominio {
-        String descricaoEsperada = "Uma categoria";
+        String nomeEsperado = "Uma categoria";
 
-        Categoria categoria = new Categoria(descricaoEsperada);
+        Categoria categoria = new Categoria(nomeEsperado);
 
-        assertEquals(descricaoEsperada, categoria.getNome());
+        assertEquals(nomeEsperado, categoria.getNome());
     }
 
     @Test 
@@ -31,4 +31,24 @@ public class CategoriaTeste {
         
         new Categoria(nomeInvalido);
     }
+
+    @Test
+    public void deveAtualizarONomeDaCategoria() throws ExcecaoDeDominio {
+        String nomeNovo = "Novo nome";
+        Categoria categoria = new Categoria("Nome antigo");
+
+        categoria.atualizarNome(nomeNovo);
+
+        assertEquals(nomeNovo, categoria.getNome());
+    }
+
+    @Test
+    public void naoDeveAtualizarONomeParaUmNomeInválido() throws ExcecaoDeDominio {
+        excecaoEsperada.expect(ExcecaoDeDominio.class);
+        excecaoEsperada.expectMessage("Nome inválido");
+        String nomeInvalido = " ";
+        Categoria categoria = new Categoria("Nome antigo");
+
+        categoria.atualizarNome(nomeInvalido);
+   }
 }

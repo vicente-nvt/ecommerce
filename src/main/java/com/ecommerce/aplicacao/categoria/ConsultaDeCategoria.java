@@ -1,9 +1,7 @@
 package com.ecommerce.aplicacao.categoria;
 
 import com.ecommerce.aplicacao.ExcecaoDeAplicacao;
-import com.ecommerce.aplicacao.base.ConsultorDeCategoria;
-import com.ecommerce.aplicacao.dtos.CategoriaDto;
-import com.ecommerce.aplicacao.dtos.ObjetoDto;
+import com.ecommerce.aplicacao.base.ObjetoDto;
 import com.ecommerce.dominio.entidades.Categoria;
 import com.ecommerce.infra.repositorio.CategoriaRepositorio;
 
