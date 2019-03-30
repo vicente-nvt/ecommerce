@@ -1,4 +1,4 @@
-package com.java.ecommerce.dominio;
+package com.ecommerce.dominio;
 
 import java.util.ArrayList;
 import java.util.List;

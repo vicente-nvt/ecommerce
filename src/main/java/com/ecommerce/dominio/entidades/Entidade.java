@@ -1,4 +1,4 @@
-package com.java.ecommerce.dominio;
+package com.ecommerce.dominio.entidades;
 
 public class Entidade {
 

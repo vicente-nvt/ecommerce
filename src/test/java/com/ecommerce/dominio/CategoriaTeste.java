@@ -1,6 +1,8 @@
-package com.java.ecommerce.dominio;
+package com.ecommerce.dominio;
 
 import static org.junit.Assert.assertEquals;
+
+import com.ecommerce.dominio.entidades.Categoria;
 
 import org.junit.Rule;
 import org.junit.Test;

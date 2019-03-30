@@ -1,7 +1,7 @@
-package com.java.ecommerce.builders;
+package com.ecommerce.builders;
 
-import com.java.ecommerce.dominio.Endereco;
-import com.java.ecommerce.dominio.ExcecaoDeDominio;
+import com.ecommerce.dominio.ExcecaoDeDominio;
+import com.ecommerce.dominio.entidades.Endereco;
 
 public class EnderecoBuilder {
 

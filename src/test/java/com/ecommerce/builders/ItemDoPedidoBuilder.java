@@ -1,8 +1,8 @@
-package com.java.ecommerce.builders;
+package com.ecommerce.builders;
 
-import com.java.ecommerce.dominio.ExcecaoDeDominio;
-import com.java.ecommerce.dominio.ItemDoPedido;
-import com.java.ecommerce.dominio.Produto;
+import com.ecommerce.dominio.ExcecaoDeDominio;
+import com.ecommerce.dominio.entidades.ItemDoPedido;
+import com.ecommerce.dominio.entidades.Produto;
 
 public class ItemDoPedidoBuilder {
 

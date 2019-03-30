@@ -1,9 +1,11 @@
-package com.java.ecommerce.dominio;
+package com.ecommerce.dominio;
 
 import static org.junit.Assert.assertEquals;
 
-import com.java.ecommerce.builders.ClienteBuilder;
-import com.java.ecommerce.builders.EnderecoBuilder;
+import com.ecommerce.builders.ClienteBuilder;
+import com.ecommerce.builders.EnderecoBuilder;
+import com.ecommerce.dominio.entidades.Cliente;
+import com.ecommerce.dominio.entidades.Endereco;
 
 import org.junit.Rule;
 import org.junit.Test;

@@ -1,12 +1,13 @@
-package com.java.ecommerce.dominio;
+package com.ecommerce.dominio;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 
-import com.java.ecommerce.builders.ProdutoBuilder;
-import com.java.ecommerce.dominio.ExcecaoDeDominio;
+import com.ecommerce.builders.ProdutoBuilder;
+import com.ecommerce.dominio.entidades.Categoria;
+import com.ecommerce.dominio.entidades.Produto;
 
 import org.junit.Rule;
 import org.junit.Test;

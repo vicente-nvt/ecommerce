@@ -1,6 +1,9 @@
-package com.java.ecommerce.dominio;
+package com.ecommerce.dominio.entidades;
 
 import java.math.BigDecimal;
+
+import com.ecommerce.dominio.ExcecaoDeDominio;
+import com.ecommerce.dominio.Validacao;
 
 public class ItemDoPedido {
 

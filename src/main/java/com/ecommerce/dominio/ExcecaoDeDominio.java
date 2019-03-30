@@ -1,8 +1,8 @@
-package com.java.ecommerce.dominio;
+package com.ecommerce.dominio;
 
 public class ExcecaoDeDominio extends Exception {
 
-	ExcecaoDeDominio(String mensagem) {
+	public ExcecaoDeDominio(String mensagem) {
 		super(mensagem);
 	}
 }

@@ -1,4 +1,7 @@
-package com.java.ecommerce.dominio;
+package com.ecommerce.dominio.entidades;
+
+import com.ecommerce.dominio.ExcecaoDeDominio;
+import com.ecommerce.dominio.Validacao;
 
 public class Endereco {
 
