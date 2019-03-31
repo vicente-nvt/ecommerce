@@ -37,6 +37,8 @@ public class ControllerBase<T> {
         long idDoObjeto;
         try {
             idDoObjeto = criador.criar(dto);
+        } catch(NotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -76,7 +78,7 @@ public class ControllerBase<T> {
         } catch (ExcecaoDeAplicacao e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (NotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -87,9 +89,9 @@ public class ControllerBase<T> {
         try {
             removedor.remover(id);
         } catch (NotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (ExcecaoDeAplicacao e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
 
         return new ResponseEntity<>(HttpStatus.OK);

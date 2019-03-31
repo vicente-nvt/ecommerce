@@ -20,8 +20,7 @@ public class Cliente extends Entidade {
     @Embedded
     private Endereco endereco;
 
-    protected Cliente() {
-    }
+    protected Cliente() { }
 
     public Cliente(String nome, String email, String senha, Endereco endereco) throws ExcecaoDeDominio {
 

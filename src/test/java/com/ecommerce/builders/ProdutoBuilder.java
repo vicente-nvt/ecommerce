@@ -13,6 +13,7 @@ public class ProdutoBuilder {
     private int quantidade;
     private String foto;
     private Categoria categoria;
+    private long id;
 
     public ProdutoBuilder() throws ExcecaoDeDominio {
         this.nome = "Produto Genérico";
@@ -20,14 +21,15 @@ public class ProdutoBuilder {
         this.quantidade = 1;
         this.foto = "www.fotosparaexemplo.com/fotos/1";
         this.categoria = new Categoria("Categoria Genérica");
+        this.id = 1;
     }
 
     public static ProdutoBuilder umProduto() throws ExcecaoDeDominio {
         return new ProdutoBuilder();
     }
 
-    public Produto construir() throws ExcecaoDeDominio {
-        return new Produto(this.nome, this.preco, this.quantidade, this.foto, this.categoria);
+    public ProdutoStub construir() throws ExcecaoDeDominio {
+        return new ProdutoStub(this.id, this.nome, this.preco, this.quantidade, this.foto, this.categoria);
     }
 
     public ProdutoBuilder comDescricao(String nome) {
@@ -53,5 +55,19 @@ public class ProdutoBuilder {
     public ProdutoBuilder comCategoria(Categoria categoria) {
         this.categoria = categoria;
         return this;
+    }
+
+    public ProdutoBuilder comId(long id) {
+        this.id = id;
+        return this;
+    }
+}
+
+class ProdutoStub extends Produto {
+
+    public ProdutoStub(long id, String descricao, BigDecimal preco, int quantidade, String foto, Categoria categoria)
+            throws ExcecaoDeDominio {
+        super(descricao, preco, quantidade, foto, categoria);
+        this.id = id;
     }
 }
