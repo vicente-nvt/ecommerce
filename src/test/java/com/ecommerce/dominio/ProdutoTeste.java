@@ -22,7 +22,7 @@ public class ProdutoTeste {
     public void deveCriarUmProdutoComDescricao() throws ExcecaoDeDominio {
         String descricaoEsperada = "Produto A";
 
-        Produto produto = ProdutoBuilder.umProduto().comDescricao(descricaoEsperada).construir();
+        Produto produto = ProdutoBuilder.umProduto().comNome(descricaoEsperada).construir();
 
         assertEquals(descricaoEsperada, produto.getNome());
     }
@@ -33,7 +33,7 @@ public class ProdutoTeste {
         excecaoEsperada.expectMessage("Nome inválido");
         final String descricaoInvalida = " ";
 
-        ProdutoBuilder.umProduto().comDescricao(descricaoInvalida).construir();
+        ProdutoBuilder.umProduto().comNome(descricaoInvalida).construir();
     }
 
     @Test

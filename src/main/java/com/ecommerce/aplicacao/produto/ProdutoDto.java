@@ -73,4 +73,12 @@ public class ProdutoDto implements ObjetoDto<Produto> {
     public long getId() {
         return this.id;
     }
+
+    public boolean equals(ProdutoDto outroProduto) {
+        return this.getNome().equals(outroProduto.getNome())
+            && this.getPreco().compareTo(outroProduto.getPreco()) == 0
+            && this.getQuantidade() == outroProduto.getQuantidade()
+            && this.getFoto().equals(outroProduto.getFoto())
+            && this.getCategoria().equals(outroProduto.getCategoria());
+    }
 }

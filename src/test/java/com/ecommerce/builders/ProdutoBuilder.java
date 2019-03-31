@@ -32,7 +32,7 @@ public class ProdutoBuilder {
         return new ProdutoStub(this.id, this.nome, this.preco, this.quantidade, this.foto, this.categoria);
     }
 
-    public ProdutoBuilder comDescricao(String nome) {
+    public ProdutoBuilder comNome(String nome) {
         this.nome = nome;
         return this;
     }

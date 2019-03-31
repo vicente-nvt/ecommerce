@@ -14,6 +14,11 @@ public class CategoriaDto implements ObjetoDto<Categoria> {
         this.nome = nome;
     }
 
+    public CategoriaDto(long id, String nome){
+        this(nome);
+        this.id = id;
+    }
+
     public void setId(long id) {
         this.id = id;
     }
@@ -27,5 +32,9 @@ public class CategoriaDto implements ObjetoDto<Categoria> {
     
     public String getNome(){ 
         return this.nome;
+    }
+
+    public boolean equals(CategoriaDto outraCategoria) {
+        return this.nome.equals(outraCategoria.getNome());
     }
 }

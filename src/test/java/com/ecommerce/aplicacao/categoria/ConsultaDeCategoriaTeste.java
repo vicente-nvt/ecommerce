@@ -25,28 +25,39 @@ public class ConsultaDeCategoriaTeste {
     @Rule
     public ExpectedException excecaoEsperada = ExpectedException.none();
 
+    private final long id = 10;
+    private final String nomeDaCategoria = "Categoria A";
     private CategoriaRepositorio repositorio;
     private ConsultaDeCategoria consultaDeCategoria;
+    private Categoria categoria;
 
     @Before
-    public void inicializar() {
+    public void inicializar() throws ExcecaoDeDominio {
         repositorio = mock(CategoriaRepositorio.class);
         consultaDeCategoria = new ConsultaDeCategoria(repositorio);
+        categoria = CategoriaBuilder.umaCategoria()
+            .comNome(nomeDaCategoria)
+            .comId(id)
+            .construir();
     }
 
     @Test
     public void deveConsultarUmaCategoria() throws ExcecaoDeAplicacao, ExcecaoDeDominio, NotFoundException {
-        final String nomeDaCategoria = "Categoria A";
         CategoriaDto categoriaEsperada = new CategoriaDto(nomeDaCategoria);
-        Categoria categoria = CategoriaBuilder.umaCategoria()
-            .comNome(nomeDaCategoria)
-            .comId(10)
-            .construir();
         when(repositorio.findById(anyLong())).thenReturn(categoria);
 
         CategoriaDto categoriaEncontrada = (CategoriaDto) consultaDeCategoria.consultarPor(anyLong());
 
         assertEquals(categoriaEsperada.getNome(), categoriaEncontrada.getNome());
+    }
+
+    @Test
+    public void deveObterUmaCategoria() throws NotFoundException {
+        when(repositorio.findById(anyLong())).thenReturn(categoria);
+
+        Categoria categoriaEncontrada = consultaDeCategoria.obterObjetoDeDominio(id);
+
+        assertEquals(categoria, categoriaEncontrada);
     }
 
     @Test

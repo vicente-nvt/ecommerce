@@ -1,5 +1,6 @@
 package com.ecommerce.aplicacao.cliente;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.mock;
@@ -37,21 +38,23 @@ public class ConsultaDeClienteTeste {
 
     private ClienteRepositorio repositorio;
     private ConsultaDeCliente consultaDeCliente;
+    private Cliente cliente;
+    private Endereco endereco;
 
     @Before
-    public void inicializar() {
+    public void inicializar() throws ExcecaoDeDominio {
         repositorio = mock(ClienteRepositorio.class);
         consultaDeCliente = new ConsultaDeCliente(repositorio);
+        endereco = EnderecoBuilder.umEndereco()
+            .comRua(rua).comEstado(estado).comCidade(cidade)
+            .comCep(cep).comBairro(bairro).construir();
+        cliente = ClienteBuilder.umCliente()
+            .comNome(nome).comEmail(email).comSenha(senha)
+            .comEndereco(endereco).comId(id).construir();
     }
 
     @Test
-    public void deveConsultarUmCliente() throws ExcecaoDeAplicacao, ExcecaoDeDominio, NotFoundException {
-        Endereco endereco = EnderecoBuilder.umEndereco().comRua(rua)
-            .comEstado(estado).comCidade(cidade).comCep(cep)
-            .comBairro(bairro).construir();
-        Cliente cliente = ClienteBuilder.umCliente().comNome(nome)
-            .comEmail(email).comSenha(senha).comEndereco(endereco)
-            .comId(id).construir();
+    public void deveConsultarUmCliente() throws ExcecaoDeAplicacao, NotFoundException {
         final EnderecoDto enderecoDto = new EnderecoDto(rua, cidade, bairro, cep, estado);
         ClienteDto clienteEsperado = new ClienteDto(id, nome, email, cliente.getSenha(), enderecoDto);
         when(repositorio.findById(anyLong())).thenReturn(cliente);
@@ -59,6 +62,15 @@ public class ConsultaDeClienteTeste {
         ClienteDto clienteEncontrado = (ClienteDto) consultaDeCliente.consultarPor(anyLong());
 
         assertTrue(clienteEsperado.equals(clienteEncontrado));
+    }
+
+    @Test
+    public void deveObterUmCliente() throws NotFoundException {
+        when(repositorio.findById(anyLong())).thenReturn(cliente);
+
+        Cliente clienteEncontrado = consultaDeCliente.obterObjetoDeDominio(id);
+
+        assertEquals(cliente, clienteEncontrado);
     }
 
     @Test
