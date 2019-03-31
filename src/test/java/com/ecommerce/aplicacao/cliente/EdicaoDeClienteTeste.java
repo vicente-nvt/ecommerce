@@ -16,18 +16,12 @@ import com.ecommerce.dominio.entidades.Cliente;
 import com.ecommerce.dominio.objetosdevalor.Endereco;
 import com.ecommerce.infra.repositorio.ClienteRepositorio;
 
-import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.mockito.InOrder;
 
 import javassist.NotFoundException;
 
 public class EdicaoDeClienteTeste {
-
-    @Rule
-    public ExpectedException excecaoEsperada = ExpectedException.none();
 
     private final long id = 1;
     private final String nome = "Cliente A";
@@ -39,15 +33,12 @@ public class EdicaoDeClienteTeste {
     private final String cep = "99999-000";
     private final String estado = "Estado A";
 
-    private ClienteRepositorio repositorio;
-    private EdicaoDeCliente edicaoDeCliente;
-    private ClienteDto clienteDto;
-    private Cliente clienteArmazenado;
-    private Cliente clienteAlterado;
-
-    @Before
-    public void inicialiar() throws ExcecaoDeDominio {
-        clienteArmazenado = ClienteBuilder.umCliente().comId(id).construir();
+    @Test
+    public void deveEditarUmCliente() throws ExcecaoDeDominio, ExcecaoDeAplicacao, NotFoundException {
+        ClienteRepositorio repositorio = mock(ClienteRepositorio.class);
+        ConsultorDeCliente consultaDeCliente = mock(ConsultorDeCliente.class);
+        InOrder emOrdem = inOrder(repositorio, consultaDeCliente);
+        Cliente clienteArmazenado = ClienteBuilder.umCliente().comId(id).construir();
         Endereco endereco = EnderecoBuilder.umEndereco()
             .comRua(rua)
             .comBairro(bairro)
@@ -55,38 +46,23 @@ public class EdicaoDeClienteTeste {
             .comCep(cep)
             .comEstado(estado)
             .construir();
-        clienteAlterado = ClienteBuilder.umCliente()
+        Cliente clienteAlterado = ClienteBuilder.umCliente()
             .comId(id)
             .comNome(nome)
             .comEmail(email)
             .comSenha(senha)
             .comEndereco(endereco)
             .construir();
-        repositorio = mock(ClienteRepositorio.class);
-        edicaoDeCliente = new EdicaoDeCliente(repositorio);
-        EnderecoDto enderecoDto = new EnderecoDto(rua, cidade, bairro, cep, estado);
-        clienteDto = new ClienteDto(id, nome, email, senha, enderecoDto);
-    }
-
-    @Test
-    public void deveEditarUmCliente() throws ExcecaoDeDominio, ExcecaoDeAplicacao, NotFoundException {
-        when(repositorio.findById(anyLong())).thenReturn(clienteArmazenado);
+        when(consultaDeCliente.obterObjetoDeDominio(anyLong())).thenReturn(clienteArmazenado);
         when(repositorio.save(clienteArmazenado)).thenReturn(clienteAlterado);
-        InOrder emOrdem = inOrder(repositorio);
-        
+        EnderecoDto enderecoDto = new EnderecoDto(rua, cidade, bairro, cep, estado);
+        ClienteDto clienteDto = new ClienteDto(id, nome, email, senha, enderecoDto);
+        EdicaoDeCliente edicaoDeCliente = new EdicaoDeCliente(repositorio, consultaDeCliente);
+
         edicaoDeCliente.editar(clienteDto);
 
         assertTrue(clienteAlterado.equals(clienteArmazenado));
-        emOrdem.verify(repositorio, times(1)).findById(anyLong());
+        emOrdem.verify(consultaDeCliente, times(1)).obterObjetoDeDominio(anyLong());
         emOrdem.verify(repositorio, times(1)).save(any(Cliente.class));
-    }
-
-    @Test
-    public void naoDeveEditarUmClienteSeEleNaoExistir() throws ExcecaoDeAplicacao, NotFoundException {
-        when(repositorio.findById(anyLong())).thenReturn(null);
-        excecaoEsperada.expect(NotFoundException.class);
-        excecaoEsperada.expectMessage("Cliente não encontrado");
-
-        edicaoDeCliente.editar(clienteDto);
     }
 }

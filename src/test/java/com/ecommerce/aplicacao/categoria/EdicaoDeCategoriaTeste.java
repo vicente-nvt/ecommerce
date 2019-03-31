@@ -9,47 +9,28 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
 import com.ecommerce.aplicacao.ExcecaoDeAplicacao;
-import com.ecommerce.aplicacao.categoria.CategoriaDto;
-import com.ecommerce.aplicacao.categoria.EdicaoDeCategoria;
 import com.ecommerce.dominio.ExcecaoDeDominio;
 import com.ecommerce.dominio.entidades.Categoria;
 import com.ecommerce.infra.repositorio.CategoriaRepositorio;
 
-import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.mockito.InOrder;
 
 import javassist.NotFoundException;
 
 public class EdicaoDeCategoriaTeste {
 
-    @Rule
-    public ExpectedException excecaoEsperada = ExpectedException.none();
-
-    private CategoriaRepositorio repositorio;
-    private ConsultorDeCategoria consultaDeCategoria;
-    private Categoria categoriaArmazenada;
-    private EdicaoDeCategoria edicaoDeCategoria;
-    private final String novoNome = "Categoria B";
-    private CategoriaDto categoriaDto;
-
-    @Before
-    public void inicializar() throws ExcecaoDeDominio {
-        repositorio = mock(CategoriaRepositorio.class);
-        consultaDeCategoria = mock(ConsultorDeCategoria.class);
-        categoriaArmazenada = new Categoria("Categoria A");
-        edicaoDeCategoria = new EdicaoDeCategoria(repositorio, consultaDeCategoria);
-        categoriaDto = new CategoriaDto();
-        categoriaDto.setNome(novoNome);
-    }
-
     @Test
-    public void deveEditarUmaCategoria() throws ExcecaoDeAplicacao, NotFoundException {
+    public void deveEditarUmaCategoria() throws ExcecaoDeAplicacao, NotFoundException, ExcecaoDeDominio {
+        CategoriaRepositorio repositorio = mock(CategoriaRepositorio.class);
+        ConsultorDeCategoria consultaDeCategoria = mock(ConsultorDeCategoria.class);
+        InOrder emOrdem = inOrder(repositorio, consultaDeCategoria);
+        Categoria categoriaArmazenada = new Categoria("Categoria A");
         when(repositorio.save(any(Categoria.class))).thenReturn(categoriaArmazenada);
         when(consultaDeCategoria.obterObjetoDeDominio(anyLong())).thenReturn(categoriaArmazenada);
-        InOrder emOrdem = inOrder(repositorio, consultaDeCategoria);
+        final String novoNome = "Categoria B";
+        CategoriaDto categoriaDto = new CategoriaDto(novoNome);
+        EdicaoDeCategoria edicaoDeCategoria = new EdicaoDeCategoria(repositorio, consultaDeCategoria);
 
         edicaoDeCategoria.editar(categoriaDto);
 

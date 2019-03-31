@@ -7,6 +7,7 @@ import com.ecommerce.aplicacao.cliente.ClienteDto;
 import com.ecommerce.aplicacao.cliente.ConsultorDeCliente;
 import com.ecommerce.aplicacao.cliente.CriadorDeCliente;
 import com.ecommerce.aplicacao.cliente.EditorDeCliente;
+import com.ecommerce.aplicacao.cliente.RemovedorDeCliente;
 import com.ecommerce.dominio.entidades.Cliente;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,9 @@ public class ClienteController extends ControllerBase<Cliente>{
     @Autowired
     public ClienteController(CriadorDeCliente criadorDeCliente, 
         ConsultorDeCliente consultorDeCliente,
-        EditorDeCliente editorDeCliente) {
-        super(criadorDeCliente, consultorDeCliente, editorDeCliente, null);
+        EditorDeCliente editorDeCliente,
+        RemovedorDeCliente removedorDeCliente) {
+        super(criadorDeCliente, consultorDeCliente, editorDeCliente, removedorDeCliente);
     }
 
     @PostMapping("/")

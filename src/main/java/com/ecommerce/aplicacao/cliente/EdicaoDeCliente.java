@@ -16,10 +16,12 @@ import javassist.NotFoundException;
 public class EdicaoDeCliente implements EditorDeCliente {
 
     private ClienteRepositorio repositorio;
+    private ConsultorDeCliente consultorDeCliente;
 
     @Autowired
-    public EdicaoDeCliente(ClienteRepositorio repositorio) {
+    public EdicaoDeCliente(ClienteRepositorio repositorio, ConsultorDeCliente consultorDeCliente) {
         this.repositorio = repositorio;
+        this.consultorDeCliente = consultorDeCliente;
 	}
 
 	@Override
@@ -28,10 +30,7 @@ public class EdicaoDeCliente implements EditorDeCliente {
         ClienteDto clienteDto = (ClienteDto) dto;
         EnderecoDto enderecoDto = clienteDto.getEndereco();
 
-        Cliente clienteArmazenado = repositorio.findById(clienteDto.getId());
-
-        if (clienteArmazenado == null)
-            throw new NotFoundException("Cliente não encontrado");
+        Cliente clienteArmazenado = consultorDeCliente.obterObjetoDeDominio(dto.getId());
 
         try {
             Endereco novoEndereco = new Endereco(
