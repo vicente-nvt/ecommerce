@@ -1,5 +1,8 @@
 package com.ecommerce.aplicacao.produto;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.ecommerce.aplicacao.ExcecaoDeAplicacao;
 import com.ecommerce.aplicacao.base.ObjetoDto;
 import com.ecommerce.aplicacao.categoria.CategoriaDto;
@@ -20,28 +23,25 @@ public class ConsultaDeProduto implements ConsultorDeProduto {
     @Autowired
     public ConsultaDeProduto(ProdutoRepositorio repositorio) {
         this.repositorio = repositorio;
-	}
+    }
 
-	@Override
+    @Override
     public ObjetoDto<Produto> consultarPor(long id) throws ExcecaoDeAplicacao, NotFoundException {
         return mapearProdutoDto(obterObjetoDeDominio(id));
     }
 
-    private ProdutoDto mapearProdutoDto(Produto produto) {        
+    private ProdutoDto mapearProdutoDto(Produto produto) {
         Categoria categoria = produto.getCategoria();
-        CategoriaDto categoriaDto = new CategoriaDto(categoria.getId(), categoria.getNome());
-        ProdutoDto produtoDto = new ProdutoDto(
-            produto.getId(),
-            produto.getNome(),
-            produto.getPreco(),
-            produto.getQuantidade(),
-            produto.getFoto(),
-            categoriaDto
-        );
+        CategoriaDto categoriaDto = null;
+
+        if (categoria != null)
+            categoriaDto = new CategoriaDto(categoria.getId(), categoria.getNome());
+
+        ProdutoDto produtoDto = new ProdutoDto(produto.getId(), produto.getNome(), produto.getPreco(),
+                produto.getQuantidade(), produto.getFoto(), categoriaDto);
 
         return produtoDto;
     }
-
 
     @Override
     public Produto obterObjetoDeDominio(long id) throws NotFoundException {
@@ -52,4 +52,12 @@ public class ConsultaDeProduto implements ConsultorDeProduto {
 
         return produtoEncontrado;
     }
+
+    @Override
+    public List<ObjetoDto<Produto>> obterTodos() {
+        List<Produto> todosOsProdutos = repositorio.findAll();
+        return todosOsProdutos.stream()
+            .map(produto -> mapearProdutoDto(produto))
+            .collect(Collectors.toList());
+   }
 }

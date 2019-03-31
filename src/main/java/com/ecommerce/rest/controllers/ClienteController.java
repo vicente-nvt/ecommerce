@@ -1,5 +1,7 @@
 package com.ecommerce.rest.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import com.ecommerce.aplicacao.base.ObjetoDto;
@@ -41,6 +43,11 @@ public class ClienteController extends ControllerBase<Cliente>{
     @GetMapping("/{id}")
     public ResponseEntity<ObjetoDto<Cliente>> doGet(@PathVariable long id) {
         return executarGet(id);
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<List<ObjetoDto<Cliente>>> doGet() {
+        return obterTodos();
     }
 
     @PutMapping("/{id}")

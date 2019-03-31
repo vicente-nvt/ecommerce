@@ -1,6 +1,7 @@
 package com.ecommerce.rest.controllers;
 
 import java.net.URI;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -96,4 +97,16 @@ public class ControllerBase<T> {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    public ResponseEntity<List<ObjetoDto<T>>> obterTodos() {
+        List<ObjetoDto<T>> listaDeObjetos;
+        try {
+             listaDeObjetos = consultor.obterTodos();
+        } catch (Exception e) {
+            return new ResponseEntity<List<ObjetoDto<T>>>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<List<ObjetoDto<T>>>(listaDeObjetos , HttpStatus.OK);
+   }
+
 }

@@ -28,16 +28,16 @@ public class CategoriaBuilder {
     }
 
     public CategoriaStub construir() throws ExcecaoDeDominio {
-        CategoriaStub categoria = new CategoriaStub(this.nome);
-        categoria.setId(this.id);
+        CategoriaStub categoria = new CategoriaStub(this.id, this.nome);
         return categoria;
     }
 }
 
 class CategoriaStub extends Categoria {
 
-    public CategoriaStub(String nome) throws ExcecaoDeDominio {
+    public CategoriaStub(long id, String nome) throws ExcecaoDeDominio {
         super(nome);
+        this.id = id;
     }
 
     public void setId(long id) {

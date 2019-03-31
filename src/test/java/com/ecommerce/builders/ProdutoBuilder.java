@@ -20,7 +20,7 @@ public class ProdutoBuilder {
         this.preco = new BigDecimal(1.0);
         this.quantidade = 1;
         this.foto = "www.fotosparaexemplo.com/fotos/1";
-        this.categoria = new Categoria("Categoria Genérica");
+        this.categoria = CategoriaBuilder.umaCategoria().construir();
         this.id = 1;
     }
 

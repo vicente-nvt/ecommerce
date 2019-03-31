@@ -31,4 +31,8 @@ public class Categoria extends Entidade {
     private void validarNome(String nome) throws ExcecaoDeDominio {
         Validacao.validar().quando(nome.trim().isEmpty(), "Nome inválido").disparar();
     }
+
+    public boolean equals(Categoria outraCategoria) {
+        return this.getNome().equals(outraCategoria.getNome());
+    }
 }

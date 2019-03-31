@@ -1,5 +1,8 @@
 package com.ecommerce.aplicacao.cliente;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.ecommerce.aplicacao.ExcecaoDeAplicacao;
 import com.ecommerce.aplicacao.base.ObjetoDto;
 import com.ecommerce.dominio.entidades.Cliente;
@@ -29,21 +32,11 @@ public class ConsultaDeCliente implements ConsultorDeCliente {
     private ClienteDto mapearClienteDto(Cliente clienteEncontrado) {
         Endereco endereco = clienteEncontrado.getEndereco();
 
-        EnderecoDto enderecoDto = new EnderecoDto(
-            endereco.getRua(), 
-            endereco.getCidade(), 
-            endereco.getBairro(),
-            endereco.getCep(), 
-            endereco.getEstado()
-        );
+        EnderecoDto enderecoDto = new EnderecoDto(endereco.getRua(), endereco.getCidade(), endereco.getBairro(),
+                endereco.getCep(), endereco.getEstado());
 
-        ClienteDto clienteDto = new ClienteDto(
-            clienteEncontrado.getId(),
-            clienteEncontrado.getNome(), 
-            clienteEncontrado.getEmail(),
-            clienteEncontrado.getSenha(), 
-            enderecoDto
-        );
+        ClienteDto clienteDto = new ClienteDto(clienteEncontrado.getId(), clienteEncontrado.getNome(),
+                clienteEncontrado.getEmail(), clienteEncontrado.getSenha(), enderecoDto);
 
         return clienteDto;
     }
@@ -51,10 +44,18 @@ public class ConsultaDeCliente implements ConsultorDeCliente {
     @Override
     public Cliente obterObjetoDeDominio(long id) throws NotFoundException {
         Cliente clienteEncontrado = repositorio.findById(id);
-        
+
         if (clienteEncontrado == null)
             throw new NotFoundException("Cliente não encontrado");
 
         return clienteEncontrado;
     }
+
+    @Override
+    public List<ObjetoDto<Cliente>> obterTodos() {
+        List<Cliente> todosOsClientes = repositorio.findAll();
+        return todosOsClientes.stream()
+            .map(cliente -> mapearClienteDto(cliente))
+            .collect(Collectors.toList());
+   }
 }

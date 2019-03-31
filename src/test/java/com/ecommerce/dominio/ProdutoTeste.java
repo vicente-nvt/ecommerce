@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 
+import com.ecommerce.builders.CategoriaBuilder;
 import com.ecommerce.builders.ProdutoBuilder;
 import com.ecommerce.dominio.entidades.Categoria;
 import com.ecommerce.dominio.entidades.Produto;
@@ -78,5 +79,76 @@ public class ProdutoTeste {
         Produto produto = ProdutoBuilder.umProduto().comCategoria(categoriaEsperada).construir();
 
         assertEquals(categoriaEsperada, produto.getCategoria());
+    }
+
+    @Test
+    public void deveAlterarNome() throws ExcecaoDeDominio {
+        String novoNome = "Um Novo Nome";
+        Produto produto = ProdutoBuilder.umProduto().construir();
+
+        produto.alterarNome(novoNome);
+
+        assertEquals(novoNome, produto.getNome());
+    }
+
+    @Test
+    public void naoDeveAlterarParaUmNomeInvalido() throws ExcecaoDeDominio {
+        excecaoEsperada.expect(ExcecaoDeDominio.class);
+        excecaoEsperada.expectMessage("Nome inválido");
+        Produto produto = ProdutoBuilder.umProduto().construir();
+
+        produto.alterarNome(" ");
+    }
+
+    @Test
+    public void deveAjustarOPreco() throws ExcecaoDeDominio {
+        BigDecimal novoPreco = new BigDecimal(1.99);
+        Produto produto = ProdutoBuilder.umProduto().construir();
+
+        produto.ajustarPreco(novoPreco);
+
+        assertEquals(0, novoPreco.compareTo(produto.getPreco()));
+    }
+
+    @Test
+    public void naoDeveAjustarParaUmPrecoInvalido() throws ExcecaoDeDominio {
+        excecaoEsperada.expect(ExcecaoDeDominio.class);
+        excecaoEsperada.expectMessage("Preço inválido");
+        Produto produto = ProdutoBuilder.umProduto().construir();
+
+        produto.ajustarPreco(null);
+    }
+
+    @Test
+    public void deveDefinirAQuantidade() throws ExcecaoDeDominio {
+        int novaQuantidade = 199;
+        Produto produto = ProdutoBuilder.umProduto().construir();
+
+        produto.definirQuantidade(novaQuantidade);
+
+        assertEquals(novaQuantidade, produto.getQuantidade());
+    }
+
+    @Test
+    public void deveMudarAFoto() throws ExcecaoDeDominio {
+        String novaFoto = "novaUrl";
+        Produto produto = ProdutoBuilder.umProduto().construir();
+
+        produto.mudarFoto(novaFoto);
+
+        assertEquals(novaFoto, produto.getFoto());
+    }
+
+    @Test
+    public void deveAlterarOPreco() throws ExcecaoDeDominio {
+        Categoria novaCategoria = CategoriaBuilder.umaCategoria()
+            .comId(108)
+            .comNome("Ferramentas")
+            .construir();
+        Produto produto = ProdutoBuilder.umProduto().construir();
+
+        produto.trocarCategoria(novaCategoria);
+
+        assertEquals(novaCategoria, produto.getCategoria());
     }
 }

@@ -1,5 +1,8 @@
 package com.ecommerce.aplicacao.categoria;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.ecommerce.aplicacao.ExcecaoDeAplicacao;
 import com.ecommerce.aplicacao.base.ObjetoDto;
 import com.ecommerce.dominio.entidades.Categoria;
@@ -18,9 +21,9 @@ public class ConsultaDeCategoria implements ConsultorDeCategoria {
     @Autowired
     public ConsultaDeCategoria(CategoriaRepositorio repositorio) {
         this.repositorio = repositorio;
-	}
+    }
 
-	@Override
+    @Override
     public ObjetoDto<Categoria> consultarPor(long id) throws ExcecaoDeAplicacao, NotFoundException {
         return mapearCategoriaDto(obterObjetoDeDominio(id));
     }
@@ -38,9 +41,17 @@ public class ConsultaDeCategoria implements ConsultorDeCategoria {
     public Categoria obterObjetoDeDominio(long id) throws NotFoundException {
         Categoria categoriaEncontrada = repositorio.findById(id);
 
-        if (categoriaEncontrada == null) 
+        if (categoriaEncontrada == null)
             throw new NotFoundException("Categoria não encontrada");
 
         return categoriaEncontrada;
+    }
+
+    @Override
+    public List<ObjetoDto<Categoria>> obterTodos() {
+        List<Categoria> todasAsCategorias = repositorio.findAll();
+        return todasAsCategorias.stream()
+            .map(categoria -> mapearCategoriaDto(categoria))
+            .collect(Collectors.toList());
     }
 }

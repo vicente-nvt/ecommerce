@@ -1,5 +1,7 @@
 package com.ecommerce.rest.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import com.ecommerce.aplicacao.base.ObjetoDto;
@@ -49,5 +51,10 @@ public class CategoriaController extends ControllerBase<Categoria> {
     @GetMapping("/{id}")
     public ResponseEntity<ObjetoDto<Categoria>> doGet(@PathVariable long id) {
         return executarGet(id);
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<List<ObjetoDto<Categoria>>> doGet() {
+        return obterTodos();
     }
 }
