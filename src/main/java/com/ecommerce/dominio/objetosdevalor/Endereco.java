@@ -1,15 +1,17 @@
-package com.ecommerce.dominio.entidades;
+package com.ecommerce.dominio.objetosdevalor;
 
 import com.ecommerce.dominio.ExcecaoDeDominio;
 import com.ecommerce.dominio.Validacao;
 
-public class Endereco {
+public class Endereco extends ObjetoDeValor {
 
     private String rua;
     private String cidade;
     private String bairro;
     private String cep;
     private String estado;
+
+    protected Endereco() { }
 
     public Endereco(String rua, String cidade, String bairro, String cep, String estado) 
         throws ExcecaoDeDominio {
@@ -47,5 +49,13 @@ public class Endereco {
 
     public String getEstado() {
         return this.estado;
+    }
+
+    public boolean equals(Endereco outroEndereco) {
+        return this.rua.equals(outroEndereco.getRua()) &&
+            this.cidade.equals(outroEndereco.getCidade()) &&
+            this.bairro.equals(outroEndereco.getBairro()) &&
+            this.cep.equals(outroEndereco.getCep()) &&
+            this.estado.equals(outroEndereco.getEstado());
     }
 }

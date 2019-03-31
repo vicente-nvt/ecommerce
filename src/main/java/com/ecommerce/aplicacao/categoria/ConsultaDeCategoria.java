@@ -22,12 +22,7 @@ public class ConsultaDeCategoria implements ConsultorDeCategoria {
 
 	@Override
     public ObjetoDto<Categoria> consultarPor(long id) throws ExcecaoDeAplicacao, NotFoundException {
-        Categoria categoriaEncontrada = repositorio.findById(id);
-
-        if (categoriaEncontrada == null) 
-            throw new NotFoundException("Categoria não encontrada");
-
-        return mapearCategoriaDto(categoriaEncontrada);
+        return mapearCategoriaDto(obterObjetoDeDominio(id));
     }
 
     private CategoriaDto mapearCategoriaDto(Categoria categoriaEncontrada) {
@@ -37,5 +32,15 @@ public class ConsultaDeCategoria implements ConsultorDeCategoria {
         categoriaMapeada.setNome(categoriaEncontrada.getNome());
 
         return categoriaMapeada;
+    }
+
+    @Override
+    public Categoria obterObjetoDeDominio(long id) throws NotFoundException {
+        Categoria categoriaEncontrada = repositorio.findById(id);
+
+        if (categoriaEncontrada == null) 
+            throw new NotFoundException("Categoria não encontrada");
+
+        return categoriaEncontrada;
     }
 }

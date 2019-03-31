@@ -3,7 +3,7 @@ package com.ecommerce.dominio;
 import static org.junit.Assert.assertEquals;
 
 import com.ecommerce.builders.EnderecoBuilder;
-import com.ecommerce.dominio.entidades.Endereco;
+import com.ecommerce.dominio.objetosdevalor.Endereco;
 
 import org.junit.Rule;
 import org.junit.Test;

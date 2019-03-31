@@ -13,18 +13,18 @@ import javassist.NotFoundException;
 public class RemocaoDeCategoria implements RemovedorDeCategoria {
 
     private CategoriaRepositorio repositorio;
+    private ConsultorDeCategoria consultorDeCategoria;
 
     @Autowired
-    public RemocaoDeCategoria(CategoriaRepositorio repositorio) {
+    public RemocaoDeCategoria(CategoriaRepositorio repositorio, 
+        ConsultorDeCategoria consultorDeCategoria) {
         this.repositorio = repositorio;
+        this.consultorDeCategoria = consultorDeCategoria;
     }
 
     @Override
     public void remover(long id) throws ExcecaoDeAplicacao, NotFoundException {
-        Categoria categoria = repositorio.findById(id);
-
-        if (categoria == null)
-            throw new NotFoundException("Categoria inexistente");
+        Categoria categoria = consultorDeCategoria.obterObjetoDeDominio(id);
 
         repositorio.delete(categoria);
     }

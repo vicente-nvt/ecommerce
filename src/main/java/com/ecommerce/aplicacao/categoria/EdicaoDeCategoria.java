@@ -15,20 +15,20 @@ import javassist.NotFoundException;
 public class EdicaoDeCategoria implements EditorDeCategoria {
 
     private CategoriaRepositorio repositorio;
+    private ConsultorDeCategoria consultorDeCategoria;
 
     @Autowired
-    public EdicaoDeCategoria(CategoriaRepositorio repositorio) {
+    public EdicaoDeCategoria(CategoriaRepositorio repositorio,
+        ConsultorDeCategoria consultorDeCategoria) {
         this.repositorio = repositorio;
+        this.consultorDeCategoria = consultorDeCategoria;
     }
 
     @Override
     public void editar(ObjetoDto<Categoria> dto) throws ExcecaoDeAplicacao, NotFoundException {
         CategoriaDto categoriaDto = (CategoriaDto) dto;
-        Categoria categoria = repositorio.findById(categoriaDto.getId());
-        
-        if (categoria == null)
-            throw new NotFoundException("Categoria não encontrada");
-        
+        Categoria categoria = consultorDeCategoria.obterObjetoDeDominio(dto.getId());
+
         try {
             categoria.atualizarNome(categoriaDto.getNome());
         } catch (ExcecaoDeDominio e) {
@@ -37,5 +37,4 @@ public class EdicaoDeCategoria implements EditorDeCategoria {
         
         repositorio.save(categoria);
     }
-
 }

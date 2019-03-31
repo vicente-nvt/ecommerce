@@ -1,4 +1,4 @@
-package com.ecommerce.aplicacao;
+package com.ecommerce.aplicacao.categoria;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -6,6 +6,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.ecommerce.aplicacao.ExcecaoDeAplicacao;
 import com.ecommerce.aplicacao.categoria.CategoriaDto;
 import com.ecommerce.aplicacao.categoria.CriacaoDeCategoria;
 import com.ecommerce.builders.CategoriaBuilder;
@@ -18,8 +19,7 @@ import org.junit.Test;
 public class CriacaoDeCategoriaTeste {
 
     @Test
-    public void devePersistirUmaCategoria() throws ExcecaoDeAplicacao, ExcecaoDeDominio, NoSuchFieldException,
-            SecurityException, IllegalArgumentException, IllegalAccessException {
+    public void devePersistirUmaCategoria() throws ExcecaoDeAplicacao, ExcecaoDeDominio {
         CategoriaRepositorio repositorio = mock(CategoriaRepositorio.class);
         Categoria categoriaArmazenada = CategoriaBuilder.umaCategoria()
             .comId(1)

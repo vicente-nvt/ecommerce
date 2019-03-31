@@ -10,7 +10,7 @@ public class Categoria extends Entidade {
 
     private String nome;
 
-    private Categoria() { }
+    protected Categoria() { }
 
     public Categoria(String nome) throws ExcecaoDeDominio {
         validarNome(nome);

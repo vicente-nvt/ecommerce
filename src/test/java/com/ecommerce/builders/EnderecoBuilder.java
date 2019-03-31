@@ -1,7 +1,7 @@
 package com.ecommerce.builders;
 
 import com.ecommerce.dominio.ExcecaoDeDominio;
-import com.ecommerce.dominio.entidades.Endereco;
+import com.ecommerce.dominio.objetosdevalor.Endereco;
 
 public class EnderecoBuilder {
 

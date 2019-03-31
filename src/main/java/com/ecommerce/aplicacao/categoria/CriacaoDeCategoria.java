@@ -22,15 +22,15 @@ public class CriacaoDeCategoria implements CriadorDeCategoria {
     @Override
     public long criar(ObjetoDto<Categoria> dto) throws ExcecaoDeAplicacao {
         String nomeDaCategoria = ((CategoriaDto) dto).getNome();
-        Categoria novaCategoria;
-    
+
+        Categoria categoria;
         try {
-            novaCategoria = new Categoria(nomeDaCategoria);
+            categoria = new Categoria(nomeDaCategoria);
         } catch (ExcecaoDeDominio e) {
             throw new ExcecaoDeAplicacao(e.getMessage());
         }
 
-        Categoria categoriaArmazenada = repositorio.save(novaCategoria);
+        Categoria categoriaArmazenada = repositorio.save(categoria);
 
         return categoriaArmazenada.getId();
     }

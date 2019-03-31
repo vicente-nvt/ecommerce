@@ -1,4 +1,4 @@
-package com.ecommerce.aplicacao;
+package com.ecommerce.aplicacao.categoria;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -8,6 +8,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
+import com.ecommerce.aplicacao.ExcecaoDeAplicacao;
 import com.ecommerce.aplicacao.categoria.CategoriaDto;
 import com.ecommerce.aplicacao.categoria.EdicaoDeCategoria;
 import com.ecommerce.dominio.ExcecaoDeDominio;
@@ -28,16 +29,18 @@ public class EdicaoDeCategoriaTeste {
     public ExpectedException excecaoEsperada = ExpectedException.none();
 
     private CategoriaRepositorio repositorio;
+    private ConsultorDeCategoria consultaDeCategoria;
     private Categoria categoriaArmazenada;
     private EdicaoDeCategoria edicaoDeCategoria;
     private final String novoNome = "Categoria B";
     private CategoriaDto categoriaDto;
 
     @Before
-    public void inicializarVariaveis() throws ExcecaoDeDominio {
+    public void inicializar() throws ExcecaoDeDominio {
         repositorio = mock(CategoriaRepositorio.class);
+        consultaDeCategoria = mock(ConsultorDeCategoria.class);
         categoriaArmazenada = new Categoria("Categoria A");
-        edicaoDeCategoria = new EdicaoDeCategoria(repositorio);
+        edicaoDeCategoria = new EdicaoDeCategoria(repositorio, consultaDeCategoria);
         categoriaDto = new CategoriaDto();
         categoriaDto.setNome(novoNome);
     }
@@ -45,22 +48,13 @@ public class EdicaoDeCategoriaTeste {
     @Test
     public void deveEditarUmaCategoria() throws ExcecaoDeAplicacao, NotFoundException {
         when(repositorio.save(any(Categoria.class))).thenReturn(categoriaArmazenada);
-        when(repositorio.findById(anyLong())).thenReturn(categoriaArmazenada);
-        InOrder emOrdem = inOrder(repositorio);
+        when(consultaDeCategoria.obterObjetoDeDominio(anyLong())).thenReturn(categoriaArmazenada);
+        InOrder emOrdem = inOrder(repositorio, consultaDeCategoria);
 
         edicaoDeCategoria.editar(categoriaDto);
 
         assertEquals(novoNome, categoriaArmazenada.getNome());
-        emOrdem.verify(repositorio, times(1)).findById(anyLong());
+        emOrdem.verify(consultaDeCategoria, times(1)).obterObjetoDeDominio(anyLong());
         emOrdem.verify(repositorio, times(1)).save(any(Categoria.class));
-    }
-
-    @Test
-    public void naoDeveEditarSeNaoHouverCategoriaArmazenada() throws ExcecaoDeAplicacao, NotFoundException {
-        when(repositorio.findById(anyLong())).thenReturn(null);
-        excecaoEsperada.expect(NotFoundException.class);
-        excecaoEsperada.expectMessage("Categoria não encontrada");
-
-        edicaoDeCategoria.editar(categoriaDto);
     }
 }
