@@ -26,5 +26,4 @@ public class PedidoController extends ControllerBase<Pedido> {
     public ResponseEntity<Object> doPost(@RequestBody CriacaoDePedidoDto dto, HttpServletRequest request) {
         return executarPost(dto, request);
     }
-
 }

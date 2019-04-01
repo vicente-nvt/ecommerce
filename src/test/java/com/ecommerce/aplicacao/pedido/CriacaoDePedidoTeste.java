@@ -7,9 +7,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.Calendar;
-import java.util.Date;
-
 import com.ecommerce.aplicacao.ExcecaoDeAplicacao;
 import com.ecommerce.aplicacao.cliente.ClienteDto;
 import com.ecommerce.aplicacao.cliente.ConsultorDeCliente;
@@ -19,14 +16,13 @@ import com.ecommerce.builders.PedidoBuilder;
 import com.ecommerce.dominio.ExcecaoDeDominio;
 import com.ecommerce.dominio.entidades.Cliente;
 import com.ecommerce.dominio.entidades.Pedido;
-import com.ecommerce.dominio.entidades.StatusDoPedido;
 import com.ecommerce.infra.repositorio.PedidoRepositorio;
 
 import org.junit.Test;
 
 import javassist.NotFoundException;
 
-public class CriacaoDePeditoTeste {
+public class CriacaoDePedidoTeste {
 
     private final long idDoCliente = 19;
     private final String nomeDoCliente = "Cliente A";

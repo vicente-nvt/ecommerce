@@ -1,11 +1,8 @@
 package com.ecommerce.aplicacao.pedido;
 
-import java.util.Date;
-
 import com.ecommerce.aplicacao.base.ObjetoDto;
 import com.ecommerce.aplicacao.cliente.ClienteDto;
 import com.ecommerce.dominio.entidades.Pedido;
-import com.ecommerce.dominio.entidades.StatusDoPedido;
 
 public class CriacaoDePedidoDto implements ObjetoDto<Pedido> {
 
