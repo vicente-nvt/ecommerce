@@ -3,7 +3,6 @@ package com.ecommerce.aplicacao.pedido;
 import com.ecommerce.aplicacao.ExcecaoDeAplicacao;
 import com.ecommerce.aplicacao.base.ObjetoDto;
 import com.ecommerce.aplicacao.cliente.ClienteDto;
-import com.ecommerce.aplicacao.cliente.ConsultaDeCliente;
 import com.ecommerce.aplicacao.cliente.ConsultorDeCliente;
 import com.ecommerce.dominio.ExcecaoDeDominio;
 import com.ecommerce.dominio.entidades.Cliente;
@@ -25,11 +24,11 @@ public class CriacaoDePedido implements CriadorDePedido {
     public CriacaoDePedido(PedidoRepositorio repositorio, ConsultorDeCliente consultorDeCliente) {
         this.repositorio = repositorio;
         this.consultorDeCliente = consultorDeCliente;
-	}
+    }
 
-	@Override
+    @Override
     public long criar(ObjetoDto<Pedido> dto) throws ExcecaoDeAplicacao, ExcecaoDeDominio, NotFoundException {
-        PedidoDto pedidoDto = (PedidoDto) dto;
+        CriacaoDePedidoDto pedidoDto = (CriacaoDePedidoDto) dto;
 
         ClienteDto clienteDto = pedidoDto.getCliente();
         Cliente cliente = consultorDeCliente.obterObjetoDeDominio(clienteDto.getId());

@@ -3,7 +3,7 @@ package com.ecommerce.rest.controllers;
 import javax.servlet.http.HttpServletRequest;
 
 import com.ecommerce.aplicacao.pedido.CriadorDePedido;
-import com.ecommerce.aplicacao.pedido.PedidoDto;
+import com.ecommerce.aplicacao.pedido.CriacaoDePedidoDto;
 import com.ecommerce.dominio.entidades.Pedido;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class PedidoController extends ControllerBase<Pedido> {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Object> doPost(@RequestBody PedidoDto dto, HttpServletRequest request) {
+    public ResponseEntity<Object> doPost(@RequestBody CriacaoDePedidoDto dto, HttpServletRequest request) {
         return executarPost(dto, request);
     }
 

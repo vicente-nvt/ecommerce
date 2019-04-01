@@ -10,7 +10,7 @@ import com.ecommerce.aplicacao.itemdopedido.ItemDoPedidoDto;
 import com.ecommerce.dominio.entidades.Pedido;
 import com.ecommerce.dominio.entidades.StatusDoPedido;
 
-public class PedidoDto implements ObjetoDto<Pedido> {
+public class ConsultaDePedidoDto implements ObjetoDto<Pedido> {
 
     private long id;
     private ClienteDto cliente;
@@ -18,7 +18,7 @@ public class PedidoDto implements ObjetoDto<Pedido> {
     private StatusDoPedido status;
     private Collection<ItemDoPedidoDto> itens;
 
-    public PedidoDto(long id, ClienteDto cliente, Date data, StatusDoPedido status) {
+    public ConsultaDePedidoDto(long id, ClienteDto cliente, Date data, StatusDoPedido status) {
         this.id = id;
         this.cliente = cliente;
         this.data = data;
@@ -44,8 +44,8 @@ public class PedidoDto implements ObjetoDto<Pedido> {
         return this.id;
     }
 
-	public ClienteDto getCliente() {
-		return this.cliente;
-	}
+    public ClienteDto getCliente() {
+        return this.cliente;
+    }
 
 }

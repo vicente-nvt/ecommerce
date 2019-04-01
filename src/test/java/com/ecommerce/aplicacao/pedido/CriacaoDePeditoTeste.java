@@ -28,8 +28,6 @@ import javassist.NotFoundException;
 
 public class CriacaoDePeditoTeste {
 
-    private final long idDoPedido = 9;
-    private final Date data = Calendar.getInstance().getTime();
     private final long idDoCliente = 19;
     private final String nomeDoCliente = "Cliente A";
     private final String emailDoCliente = "email@cliente.com";
@@ -47,7 +45,7 @@ public class CriacaoDePeditoTeste {
         CriacaoDePedido criacaoDePedido = new CriacaoDePedido(repositorio, consultorDeCliente);
         EnderecoDto enderecoDto = new EnderecoDto(rua, cidade, bairro, cep, estado);
         ClienteDto clienteDto = new ClienteDto(idDoCliente, nomeDoCliente, emailDoCliente, senhaDoCliente, enderecoDto);
-        PedidoDto pedidoDto = new PedidoDto(idDoPedido, clienteDto, data, StatusDoPedido.ABERTO);
+        CriacaoDePedidoDto pedidoDto = new CriacaoDePedidoDto(clienteDto);
         Pedido pedido = PedidoBuilder.umPedido().construir();
         Cliente cliente = ClienteBuilder.umCliente().comId(idDoCliente).construir();
         when(repositorio.save(any(Pedido.class))).thenReturn(pedido);
