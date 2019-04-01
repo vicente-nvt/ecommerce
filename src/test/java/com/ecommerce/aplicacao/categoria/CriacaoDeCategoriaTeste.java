@@ -26,11 +26,11 @@ public class CriacaoDeCategoriaTeste {
             .comNome("Categoria A")
             .construir();
         when(repositorio.save(any(Categoria.class))).thenReturn(categoriaArmazenada);
-        CriacaoDeCategoria criadorDeCategoria = new CriacaoDeCategoria(repositorio);
+        CriacaoDeCategoria criacaoDeCategoria = new CriacaoDeCategoria(repositorio);
         String nomeDaCategoria = "Categoria A";
         CategoriaDto categoriaDto = new CategoriaDto(nomeDaCategoria);
 
-        criadorDeCategoria.criar(categoriaDto);
+        criacaoDeCategoria.criar(categoriaDto);
 
         verify(repositorio, times(1)).save(any(Categoria.class));
     }

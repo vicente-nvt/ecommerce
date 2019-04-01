@@ -6,15 +6,24 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
 import com.ecommerce.dominio.ExcecaoDeDominio;
 import com.ecommerce.dominio.Validacao;
 
-public class Pedido {
+@Entity
+public class Pedido extends Entidade {
 
+    @OneToOne
     private Cliente cliente;
     private Date data;
     private StatusDoPedido status;
+    @OneToMany
     private Collection<ItemDoPedido> itens;
+
+    protected Pedido() { }
 
     public Pedido(Cliente cliente) throws ExcecaoDeDominio {
 
