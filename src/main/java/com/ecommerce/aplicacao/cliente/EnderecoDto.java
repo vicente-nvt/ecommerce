@@ -11,6 +11,9 @@ public class EnderecoDto implements ObjetoDeValorDto<Endereco> {
     private String cep;
     private String estado;
 
+    public EnderecoDto() {
+    }
+
     public EnderecoDto(String rua, String cidade, String bairro, String cep, String estado) {
         this.rua = rua;
         this.cidade = cidade;
@@ -60,10 +63,8 @@ public class EnderecoDto implements ObjetoDeValorDto<Endereco> {
     }
 
     public boolean equals(EnderecoDto outroDto) {
-        return this.rua.equals(outroDto.getRua())
-            && this.bairro.equals(outroDto.getBairro())
-            && this.cidade.equals(outroDto.getCidade())
-            && this.cep.equals(outroDto.getCep())
-            && this.estado.equals(outroDto.getEstado());
+        return this.rua.equals(outroDto.getRua()) && this.bairro.equals(outroDto.getBairro())
+                && this.cidade.equals(outroDto.getCidade()) && this.cep.equals(outroDto.getCep())
+                && this.estado.equals(outroDto.getEstado());
     }
 }

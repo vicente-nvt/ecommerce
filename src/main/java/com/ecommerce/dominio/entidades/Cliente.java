@@ -20,7 +20,8 @@ public class Cliente extends Entidade {
     @Embedded
     private Endereco endereco;
 
-    protected Cliente() { }
+    protected Cliente() {
+    }
 
     public Cliente(String nome, String email, String senha, Endereco endereco) throws ExcecaoDeDominio {
 
@@ -52,7 +53,7 @@ public class Cliente extends Entidade {
         this.email = email;
     }
 
-    private void setEndereco (Endereco endereco) throws ExcecaoDeDominio {
+    private void setEndereco(Endereco endereco) throws ExcecaoDeDominio {
         Validacao.validar().quando(endereco == null, "Endereço inválido").disparar();
 
         this.endereco = endereco;
@@ -109,11 +110,9 @@ public class Cliente extends Entidade {
     }
 
     public boolean equals(Cliente outroCliente) {
-        return this.id.equals(outroCliente.getId()) 
-            && this.nome.equals(outroCliente.getNome())
-            && this.email.equals(outroCliente.getEmail()) 
-            && this.senha.equals(outroCliente.getSenha())
-            && this.endereco.equals(outroCliente.getEndereco());
+        return this.id.equals(outroCliente.getId()) && this.nome.equals(outroCliente.getNome())
+                && this.email.equals(outroCliente.getEmail()) && this.senha.equals(outroCliente.getSenha())
+                && this.endereco.equals(outroCliente.getEndereco());
     }
 
 }

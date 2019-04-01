@@ -25,21 +25,14 @@ public class CriacaoDeCliente implements CriadorDeCliente {
         ClienteDto clienteDto = (ClienteDto) dto;
         EnderecoDto enderecoDto = clienteDto.getEndereco();
 
+        if (enderecoDto == null)
+            throw new ExcecaoDeAplicacao("O endereço não foi informado");
+
         Cliente cliente;
         try {
-            Endereco endereco = new Endereco(
-                enderecoDto.getRua(),
-                enderecoDto.getCidade(),
-                enderecoDto.getBairro(),
-                enderecoDto.getCep(),
-                enderecoDto.getEstado()
-            );
-            cliente = new Cliente(
-                clienteDto.getNome(),
-                clienteDto.getEmail(),
-                clienteDto.getSenha(),
-                endereco
-            );
+            Endereco endereco = new Endereco(enderecoDto.getRua(), enderecoDto.getCidade(), enderecoDto.getBairro(),
+                    enderecoDto.getCep(), enderecoDto.getEstado());
+            cliente = new Cliente(clienteDto.getNome(), clienteDto.getEmail(), clienteDto.getSenha(), endereco);
         } catch (ExcecaoDeDominio e) {
             throw new ExcecaoDeAplicacao(e.getMessage());
         }

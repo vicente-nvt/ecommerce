@@ -54,8 +54,6 @@ public class ConsultaDeCliente implements ConsultorDeCliente {
     @Override
     public List<ObjetoDto<Cliente>> obterTodos() {
         List<Cliente> todosOsClientes = repositorio.findAll();
-        return todosOsClientes.stream()
-            .map(cliente -> mapearClienteDto(cliente))
-            .collect(Collectors.toList());
-   }
+        return todosOsClientes.stream().map(cliente -> mapearClienteDto(cliente)).collect(Collectors.toList());
+    }
 }

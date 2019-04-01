@@ -14,9 +14,15 @@ import com.ecommerce.dominio.entidades.Cliente;
 import com.ecommerce.dominio.objetosdevalor.Endereco;
 import com.ecommerce.infra.repositorio.ClienteRepositorio;
 
+import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 public class CriacaoDeClienteTeste {
+
+    @Rule
+    public ExpectedException excecaoEsperada = ExpectedException.none();
 
     private final long id = 10;
     private final String nome = "Cliente A";
@@ -28,22 +34,36 @@ public class CriacaoDeClienteTeste {
     private final String estado = "Estado A";
     private final String cep = "11222-333";
 
+    private ClienteRepositorio repositorio;
+    private CriacaoDeCliente criacaoDeCliente;
+
+    @Before
+    public void inicializar() {
+        repositorio = mock(ClienteRepositorio.class);
+        criacaoDeCliente = new CriacaoDeCliente(repositorio);
+    }
+
     @Test
     public void deveArmazenarUmCliente() throws ExcecaoDeDominio, ExcecaoDeAplicacao {
-        final Endereco endereco = EnderecoBuilder.umEndereco()
-            .comBairro(bairro).comRua(rua).comCidade(cidade)
-            .comEstado(estado).comCep(cep).construir();
-        Cliente clienteArmazenado = ClienteBuilder.umCliente()
-            .comId(id).comNome(nome).comEmail(email).comSenha(senha)
-            .comEndereco(endereco).construir();
-        ClienteRepositorio repositorio = mock(ClienteRepositorio.class);
+        final Endereco endereco = EnderecoBuilder.umEndereco().comBairro(bairro).comRua(rua).comCidade(cidade)
+                .comEstado(estado).comCep(cep).construir();
+        Cliente clienteArmazenado = ClienteBuilder.umCliente().comId(id).comNome(nome).comEmail(email).comSenha(senha)
+                .comEndereco(endereco).construir();
         when(repositorio.save(any(Cliente.class))).thenReturn(clienteArmazenado);
-        CriacaoDeCliente criacaoDeCliente = new CriacaoDeCliente(repositorio);
         EnderecoDto enderecoDto = new EnderecoDto(rua, cidade, bairro, cep, estado);
         ClienteDto clienteDto = new ClienteDto(id, nome, email, senha, enderecoDto);
 
         criacaoDeCliente.criar(clienteDto);
 
         verify(repositorio, times(1)).save(any(Cliente.class));
+    }
+
+    @Test
+    public void naoDeveArmazenarClienteSeOEnderecoNaoForInformado() throws ExcecaoDeAplicacao {
+        excecaoEsperada.expect(ExcecaoDeAplicacao.class);
+        excecaoEsperada.expectMessage("O endereço não foi informado");
+        ClienteDto clienteDto = new ClienteDto(id, nome, email, senha, null);
+
+        criacaoDeCliente.criar(clienteDto);
     }
 }

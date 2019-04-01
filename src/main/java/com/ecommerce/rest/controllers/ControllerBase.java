@@ -38,17 +38,14 @@ public class ControllerBase<T> {
         long idDoObjeto;
         try {
             idDoObjeto = criador.criar(dto);
-        } catch(NotFoundException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (NotFoundException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
 
-        URI location = ServletUriComponentsBuilder
-            .fromCurrentRequest()
-            .path("/{id}")
-            .buildAndExpand(idDoObjeto)
-            .toUri();
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(idDoObjeto)
+                .toUri();
 
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.setLocation(location);
@@ -61,14 +58,16 @@ public class ControllerBase<T> {
     public ResponseEntity<ObjetoDto<T>> executarGet(long id) {
         ObjetoDto<T> objeto;
         try {
-             objeto = consultor.consultarPor(id);
+            objeto = consultor.consultarPor(id);
         } catch (ExcecaoDeAplicacao e) {
             return new ResponseEntity<ObjetoDto<T>>(HttpStatus.BAD_REQUEST);
         } catch (NotFoundException e) {
             return new ResponseEntity<ObjetoDto<T>>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<ObjetoDto<T>>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        return new ResponseEntity<ObjetoDto<T>>(objeto , HttpStatus.OK);
+        return new ResponseEntity<ObjetoDto<T>>(objeto, HttpStatus.OK);
     }
 
     public ResponseEntity<Object> executarPut(ObjetoDto<T> dto, long id) {
@@ -77,9 +76,11 @@ public class ControllerBase<T> {
         try {
             editor.editar(dto);
         } catch (ExcecaoDeAplicacao e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest().body(e.getMessage());
         } catch (NotFoundException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -101,12 +102,12 @@ public class ControllerBase<T> {
     public ResponseEntity<List<ObjetoDto<T>>> obterTodos() {
         List<ObjetoDto<T>> listaDeObjetos;
         try {
-             listaDeObjetos = consultor.obterTodos();
+            listaDeObjetos = consultor.obterTodos();
         } catch (Exception e) {
             return new ResponseEntity<List<ObjetoDto<T>>>(HttpStatus.BAD_REQUEST);
         }
 
-        return new ResponseEntity<List<ObjetoDto<T>>>(listaDeObjetos , HttpStatus.OK);
-   }
+        return new ResponseEntity<List<ObjetoDto<T>>>(listaDeObjetos, HttpStatus.OK);
+    }
 
 }
