@@ -4,6 +4,7 @@ import com.ecommerce.aplicacao.ExcecaoDeAplicacao;
 import com.ecommerce.aplicacao.base.ObjetoDto;
 import com.ecommerce.dominio.ExcecaoDeDominio;
 import com.ecommerce.dominio.entidades.Cliente;
+import com.ecommerce.dominio.entidades.CodificadorDeSenha;
 import com.ecommerce.dominio.objetosdevalor.Endereco;
 import com.ecommerce.infra.repositorio.ClienteRepositorio;
 
@@ -14,10 +15,12 @@ import org.springframework.stereotype.Component;
 public class CriacaoDeCliente implements CriadorDeCliente {
 
     private ClienteRepositorio repositorio;
+    private CodificadorDeSenha codificadorDeSenha;
 
     @Autowired
-    public CriacaoDeCliente(ClienteRepositorio repositorio) {
+    public CriacaoDeCliente(ClienteRepositorio repositorio, CodificadorDeSenha codificadorDeSenha) {
         this.repositorio = repositorio;
+        this.codificadorDeSenha = codificadorDeSenha;
     }
 
     @Override
@@ -32,7 +35,8 @@ public class CriacaoDeCliente implements CriadorDeCliente {
         try {
             Endereco endereco = new Endereco(enderecoDto.getRua(), enderecoDto.getCidade(), enderecoDto.getBairro(),
                     enderecoDto.getCep(), enderecoDto.getEstado());
-            cliente = new Cliente(clienteDto.getNome(), clienteDto.getEmail(), clienteDto.getSenha(), endereco);
+            String senha = codificadorDeSenha.codificar(clienteDto.getSenha());
+            cliente = new Cliente(clienteDto.getNome(), clienteDto.getEmail(), senha, endereco);
         } catch (ExcecaoDeDominio e) {
             throw new ExcecaoDeAplicacao(e.getMessage());
         }

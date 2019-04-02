@@ -54,10 +54,9 @@ public class ClienteTeste {
 
     @Test
     public void deveCriarUmclienteComSenha() throws ExcecaoDeDominio {
-        String senhaDecriptografada = "senha123";
         String senhaEsperada = "55a5e9e78207b4df8699d60886fa070079463547b095d1a05bc719bb4e6cd251";
 
-        Cliente cliente = ClienteBuilder.umCliente().comSenha(senhaDecriptografada).construir();
+        Cliente cliente = ClienteBuilder.umCliente().comSenha(senhaEsperada).construir();
 
         assertEquals(senhaEsperada, cliente.getSenha());
     }
@@ -93,7 +92,7 @@ public class ClienteTeste {
     public void deveAlterarONomeDoCliente() throws ExcecaoDeDominio {
         final String novoNome = "Novo Nome";
         Cliente cliente = ClienteBuilder.umCliente().construir();
-        
+
         cliente.alterarNome(novoNome);
 
         assertEquals(novoNome, cliente.getNome());
@@ -111,11 +110,10 @@ public class ClienteTeste {
 
     @Test
     public void deveAlterarASenhaDoCliente() throws ExcecaoDeDominio {
-        final String novaSenha = "novaSenha";
         final String senhaEsperada = "9f0342bd90b4ebb67464782b0b2ccb8a51be7908b6501e95b33348cac6fba7dd";
         Cliente cliente = ClienteBuilder.umCliente().construir();
-        
-        cliente.trocarSenha(novaSenha);
+
+        cliente.trocarSenha(senhaEsperada);
 
         assertEquals(senhaEsperada, cliente.getSenha());
     }
@@ -134,11 +132,12 @@ public class ClienteTeste {
     public void deveTrocarOEmailDoCliente() throws ExcecaoDeDominio {
         final String novoEmail = "novo@email.com";
         Cliente cliente = ClienteBuilder.umCliente().construir();
-        
+
         cliente.trocarEmail(novoEmail);
 
         assertEquals(novoEmail, cliente.getEmail());
     }
+
     @Test
     public void naoDeveTrocarOEmailSeForInvalido() throws ExcecaoDeDominio {
         excecaoEsperada.expect(ExcecaoDeDominio.class);
@@ -153,7 +152,7 @@ public class ClienteTeste {
     public void deveMudarOEnderecoDoCliente() throws ExcecaoDeDominio {
         final Endereco novoEndereco = EnderecoBuilder.umEndereco().comRua("Rua Nova").construir();
         Cliente cliente = ClienteBuilder.umCliente().construir();
-        
+
         cliente.mudarEndereco(novoEndereco);
 
         assertEquals(novoEndereco, cliente.getEndereco());
@@ -167,5 +166,5 @@ public class ClienteTeste {
         Cliente cliente = ClienteBuilder.umCliente().construir();
 
         cliente.mudarEndereco(enderecoInvalido);
-   }
+    }
 }

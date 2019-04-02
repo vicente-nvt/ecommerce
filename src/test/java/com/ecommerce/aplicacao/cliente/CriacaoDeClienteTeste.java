@@ -1,6 +1,7 @@
 package com.ecommerce.aplicacao.cliente;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -11,8 +12,10 @@ import com.ecommerce.builders.ClienteBuilder;
 import com.ecommerce.builders.EnderecoBuilder;
 import com.ecommerce.dominio.ExcecaoDeDominio;
 import com.ecommerce.dominio.entidades.Cliente;
+import com.ecommerce.dominio.entidades.CodificadorDeSenha;
 import com.ecommerce.dominio.objetosdevalor.Endereco;
 import com.ecommerce.infra.repositorio.ClienteRepositorio;
+import com.ecommerce.infra.seguranca.CodificacaoDeSenha;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -36,11 +39,13 @@ public class CriacaoDeClienteTeste {
 
     private ClienteRepositorio repositorio;
     private CriacaoDeCliente criacaoDeCliente;
+    private CodificadorDeSenha codificador;
 
     @Before
     public void inicializar() {
         repositorio = mock(ClienteRepositorio.class);
-        criacaoDeCliente = new CriacaoDeCliente(repositorio);
+        codificador = mock(CodificacaoDeSenha.class);
+        criacaoDeCliente = new CriacaoDeCliente(repositorio, codificador);
     }
 
     @Test
@@ -50,6 +55,7 @@ public class CriacaoDeClienteTeste {
         Cliente clienteArmazenado = ClienteBuilder.umCliente().comId(id).comNome(nome).comEmail(email).comSenha(senha)
                 .comEndereco(endereco).construir();
         when(repositorio.save(any(Cliente.class))).thenReturn(clienteArmazenado);
+        when(codificador.codificar(anyString())).thenReturn("#$%&@");
         EnderecoDto enderecoDto = new EnderecoDto(rua, cidade, bairro, cep, estado);
         ClienteDto clienteDto = new ClienteDto(id, nome, email, senha, enderecoDto);
 

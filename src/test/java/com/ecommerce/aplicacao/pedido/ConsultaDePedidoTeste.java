@@ -1,8 +1,6 @@
 package com.ecommerce.aplicacao.pedido;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -10,7 +8,7 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
+import java.util.Optional;
 
 import com.ecommerce.aplicacao.ExcecaoDeAplicacao;
 import com.ecommerce.aplicacao.cliente.ClienteParaConsultaDePedidoDto;
@@ -43,7 +41,7 @@ public class ConsultaDePedidoTeste {
         Pedido pedido = PedidoBuilder.umPedido().construir();
         ItemDoPedido item = ItemDoPedidoBuilder.umItem().construir();
         pedido.adicionarItem(item);
-        when(repositorio.findById(anyLong()).orElseThrow()).thenReturn(pedido);
+        when(repositorio.findById(anyLong())).thenReturn(Optional.of(pedido));
         ClienteParaConsultaDePedidoDto cliente = new ClienteParaConsultaDePedidoDto(idDoCliente, nome, email);
         ConsultaDePedidoDto pedidoEsperado = new ConsultaDePedidoDto(idDoPedido, cliente, data, StatusDoPedido.ABERTO,
                 new ArrayList<ConsultaDeItemDoPedidoDto>());

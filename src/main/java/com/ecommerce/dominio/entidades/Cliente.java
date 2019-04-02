@@ -1,9 +1,5 @@
 package com.ecommerce.dominio.entidades;
 
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 
@@ -34,11 +30,7 @@ public class Cliente extends Entidade {
     private void setSenha(String senha) throws ExcecaoDeDominio {
         Validacao.validar().quando(senha.trim().isEmpty(), "Senha inválida").disparar();
 
-        try {
-            this.senha = criptografarSenha(senha);
-        } catch (Exception e) {
-            throw new ExcecaoDeDominio(e.getMessage());
-        }
+        this.senha = senha;
     }
 
     private void setNome(String nome) throws ExcecaoDeDominio {
@@ -57,20 +49,6 @@ public class Cliente extends Entidade {
         Validacao.validar().quando(endereco == null, "Endereço inválido").disparar();
 
         this.endereco = endereco;
-    }
-
-    private String criptografarSenha(String senha) throws UnsupportedEncodingException, NoSuchAlgorithmException {
-        MessageDigest digest = MessageDigest.getInstance("SHA-256");
-        digest.update(senha.getBytes("ASCII"));
-        byte[] hash = digest.digest();
-        StringBuffer hexString = new StringBuffer();
-        for (int i = 0; i < hash.length; i++) {
-            String hex = Integer.toHexString(0xff & hash[i]);
-            if (hex.length() == 1)
-                hexString.append('0');
-            hexString.append(hex);
-        }
-        return hexString.toString();
     }
 
     private boolean validarEmail(String email) {
