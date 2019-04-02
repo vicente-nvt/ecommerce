@@ -91,9 +91,9 @@ public class ControllerBase<T> {
         try {
             removedor.remover(id);
         } catch (NotFoundException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         } catch (ExcecaoDeAplicacao e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
 
         return new ResponseEntity<>(HttpStatus.OK);
@@ -104,7 +104,7 @@ public class ControllerBase<T> {
         try {
             listaDeObjetos = consultor.consultarTodos();
         } catch (Exception e) {
-            return new ResponseEntity<List<ObjetoDto<T>>>(HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest().build();
         }
 
         return new ResponseEntity<List<ObjetoDto<T>>>(listaDeObjetos, HttpStatus.OK);
