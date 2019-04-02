@@ -39,7 +39,7 @@ public class CriacaoDeProdutoTeste {
         Produto produtoCriado = ProdutoBuilder.umProduto().construir();
         when(repositorio.save(any(Produto.class))).thenReturn(produtoCriado);
         Categoria categoria = CategoriaBuilder.umaCategoria().comId(10).comNome("Categoria A").construir();
-        when(consultorDeCategoria.obterObjetoDeDominio(anyLong())).thenReturn(categoria);
+        when(consultorDeCategoria.obterPor(anyLong())).thenReturn(categoria);
         CriacaoDeProduto criacaoDeProduto = new CriacaoDeProduto(repositorio, consultorDeCategoria);
         CategoriaDto categoriaDto = new CategoriaDto("Categoria A");
         ProdutoDto produtoDto = new ProdutoDto(id, nome, preco, quantidade, foto, categoriaDto);

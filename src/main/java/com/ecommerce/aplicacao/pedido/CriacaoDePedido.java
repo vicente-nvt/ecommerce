@@ -31,7 +31,7 @@ public class CriacaoDePedido implements CriadorDePedido {
         CriacaoDePedidoDto pedidoDto = (CriacaoDePedidoDto) dto;
 
         ClienteDto clienteDto = pedidoDto.getCliente();
-        Cliente cliente = consultorDeCliente.obterObjetoDeDominio(clienteDto.getId());
+        Cliente cliente = consultorDeCliente.obterPor(clienteDto.getId());
 
         Pedido novoPedido = new Pedido(cliente);
 

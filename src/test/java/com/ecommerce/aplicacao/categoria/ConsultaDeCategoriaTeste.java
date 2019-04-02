@@ -5,6 +5,8 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.util.Optional;
+
 import com.ecommerce.aplicacao.ExcecaoDeAplicacao;
 import com.ecommerce.aplicacao.categoria.CategoriaDto;
 import com.ecommerce.aplicacao.categoria.ConsultaDeCategoria;
@@ -30,6 +32,7 @@ public class ConsultaDeCategoriaTeste {
     private CategoriaRepositorio repositorio;
     private ConsultaDeCategoria consultaDeCategoria;
     private Categoria categoria;
+    private Optional<Categoria> optionalCategoria;
 
     @Before
     public void inicializar() throws ExcecaoDeDominio {
@@ -39,12 +42,13 @@ public class ConsultaDeCategoriaTeste {
             .comNome(nomeDaCategoria)
             .comId(id)
             .construir();
+        optionalCategoria = Optional.of(categoria);
     }
 
     @Test
     public void deveConsultarUmaCategoria() throws ExcecaoDeAplicacao, ExcecaoDeDominio, NotFoundException {
         CategoriaDto categoriaEsperada = new CategoriaDto(nomeDaCategoria);
-        when(repositorio.findById(anyLong())).thenReturn(categoria);
+        when(repositorio.findById(anyLong())).thenReturn(optionalCategoria);
 
         CategoriaDto categoriaEncontrada = (CategoriaDto) consultaDeCategoria.consultarPor(anyLong());
 
@@ -53,9 +57,9 @@ public class ConsultaDeCategoriaTeste {
 
     @Test
     public void deveObterUmaCategoria() throws NotFoundException {
-        when(repositorio.findById(anyLong())).thenReturn(categoria);
+        when(repositorio.findById(anyLong())).thenReturn(optionalCategoria);
 
-        Categoria categoriaEncontrada = consultaDeCategoria.obterObjetoDeDominio(id);
+        Categoria categoriaEncontrada = consultaDeCategoria.obterPor(id);
 
         assertEquals(categoria, categoriaEncontrada);
     }
@@ -64,7 +68,7 @@ public class ConsultaDeCategoriaTeste {
     public void naoDeveGerarResultadoQuandoACategoriaNaoExistir() throws ExcecaoDeAplicacao, NotFoundException {
         excecaoEsperada.expect(NotFoundException.class);
         excecaoEsperada.expectMessage("Categoria não encontrada");
-        when(repositorio.findById(anyLong())).thenReturn(null);
+        when(repositorio.findById(anyLong())).thenReturn(Optional.empty());
 
         consultaDeCategoria.consultarPor(anyLong());
     }

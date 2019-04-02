@@ -10,6 +10,7 @@ import com.ecommerce.dominio.entidades.Pedido;
 import com.ecommerce.dominio.entidades.Produto;
 import com.ecommerce.infra.repositorio.ItemDoPedidoRepositorio;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javassist.NotFoundException;
@@ -21,6 +22,7 @@ public class CriacaoDeItemDoPedido implements CriadorDeItemDoPedido {
     private ConsultorDePedido consultorDePedido;
     private ConsultorDeProduto consultorDeProduto;
 
+    @Autowired
     public CriacaoDeItemDoPedido(ItemDoPedidoRepositorio repositorio, ConsultorDePedido consultorDePedido,
             ConsultorDeProduto consultorDeProduto) {
         this.repositorio = repositorio;
@@ -30,15 +32,14 @@ public class CriacaoDeItemDoPedido implements CriadorDeItemDoPedido {
 
     @Override
     public long criar(ObjetoDto<ItemDoPedido> dto) throws ExcecaoDeAplicacao, ExcecaoDeDominio, NotFoundException {
-        ItemDoPedidoDto itemDoPedidoDto = (ItemDoPedidoDto) dto;
+        CriacaoDeItemDoPeditoDto itemDoPedidoDto = (CriacaoDeItemDoPeditoDto) dto;
 
-        Produto produto = consultorDeProduto.obterObjetoDeDominio(itemDoPedidoDto.getIdDoProduto());
-        Pedido pedido = consultorDePedido.obterObjetoDeDominio(itemDoPedidoDto.getIdDoPedido());
+        Produto produto = consultorDeProduto.obterPor(itemDoPedidoDto.getIdDoProduto());
+        Pedido pedido = consultorDePedido.obterPor(itemDoPedidoDto.getIdDoPedido());
 
         ItemDoPedido itemDoPedido = new ItemDoPedido(pedido, produto, itemDoPedidoDto.getQuantidade());
 
         ItemDoPedido itemCriado = repositorio.save(itemDoPedido);
         return itemCriado.getId();
     }
-
 }

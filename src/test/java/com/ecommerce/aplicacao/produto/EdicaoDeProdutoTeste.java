@@ -57,14 +57,14 @@ public class EdicaoDeProdutoTeste {
             .construir();
         CategoriaDto categoriaDto = new CategoriaDto(idDaCategoria, nomeDaCategoria);
         ProdutoDto produtoDto = new ProdutoDto(id, nome, preco, quantidade, foto, categoriaDto);
-        when(consultaDeCategoria.obterObjetoDeDominio(idDaCategoria)).thenReturn(categoria);
-        when(consultaDeProduto.obterObjetoDeDominio(id)).thenReturn(produtoArmazenado);
+        when(consultaDeCategoria.obterPor(idDaCategoria)).thenReturn(categoria);
+        when(consultaDeProduto.obterPor(id)).thenReturn(produtoArmazenado);
         InOrder emOrdem = inOrder(consultaDeProduto, repositorio);
 
         edicaoDeProduto.editar(produtoDto);
 
         assertTrue(produtoAlterado.equals(produtoArmazenado));
-        emOrdem.verify(consultaDeProduto, times(1)).obterObjetoDeDominio(anyLong());
+        emOrdem.verify(consultaDeProduto, times(1)).obterPor(anyLong());
         emOrdem.verify(repositorio, times(1)).save(any(Produto.class));
     }
 }

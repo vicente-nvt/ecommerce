@@ -30,7 +30,7 @@ public class CriacaoDeProduto implements CriadorDeProduto {
         ProdutoDto produtoDto = (ProdutoDto) dto;
 
         long idDaCategoria = produtoDto.getCategoria().getId();
-        Categoria categoria = consultorDeCategoria.obterObjetoDeDominio(idDaCategoria);
+        Categoria categoria = consultorDeCategoria.obterPor(idDaCategoria);
 
         Produto produto = new Produto(
             produtoDto.getNome(),

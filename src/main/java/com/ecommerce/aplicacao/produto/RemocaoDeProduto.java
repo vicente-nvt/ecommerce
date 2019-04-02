@@ -23,7 +23,7 @@ public class RemocaoDeProduto implements RemovedorDeProduto {
 
 	@Override
     public void remover(long id) throws ExcecaoDeAplicacao, NotFoundException {
-        Produto produtoArmazenado = consultaDeProduto.obterObjetoDeDominio(id);
+        Produto produtoArmazenado = consultaDeProduto.obterPor(id);
 
         repositorio.delete(produtoArmazenado);
     }

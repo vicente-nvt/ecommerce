@@ -1,37 +1,31 @@
 package com.ecommerce.aplicacao.pedido;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
+import java.util.List;
 
 import com.ecommerce.aplicacao.base.ObjetoDto;
-import com.ecommerce.aplicacao.cliente.ClienteDto;
-import com.ecommerce.aplicacao.itemdopedido.ItemDoPedidoDto;
+import com.ecommerce.aplicacao.cliente.ClienteParaConsultaDePedidoDto;
+import com.ecommerce.aplicacao.itemdopedido.ConsultaDeItemDoPedidoDto;
 import com.ecommerce.dominio.entidades.Pedido;
 import com.ecommerce.dominio.entidades.StatusDoPedido;
 
 public class ConsultaDePedidoDto implements ObjetoDto<Pedido> {
 
     private long id;
-    private ClienteDto cliente;
+    private ClienteParaConsultaDePedidoDto cliente;
     private Date data;
     private StatusDoPedido status;
-    private Collection<ItemDoPedidoDto> itens;
+    private Collection<ConsultaDeItemDoPedidoDto> itens;
 
-    public ConsultaDePedidoDto(long id, ClienteDto cliente, Date data, StatusDoPedido status) {
+    public ConsultaDePedidoDto(long id, ClienteParaConsultaDePedidoDto cliente, Date data, StatusDoPedido status,
+            Collection<ConsultaDeItemDoPedidoDto> itens) {
         this.id = id;
         this.cliente = cliente;
         this.data = data;
         this.status = status;
-        this.itens = new HashSet<ItemDoPedidoDto>();
-    }
-
-    public void adicionarItem(ItemDoPedidoDto itemDoPedido) {
-        this.itens.add(itemDoPedido);
-    }
-
-    public void adicionarItens(Collection<ItemDoPedidoDto> itens) {
-        this.itens.addAll(itens);
+        this.itens = itens;
     }
 
     @Override
@@ -44,8 +38,19 @@ public class ConsultaDePedidoDto implements ObjetoDto<Pedido> {
         return this.id;
     }
 
-    public ClienteDto getCliente() {
+    public Date getData() {
+        return this.data;
+    }
+
+    public StatusDoPedido getStatus() {
+        return status;
+    }
+
+    public ClienteParaConsultaDePedidoDto getCliente() {
         return this.cliente;
     }
 
+    public Collection<ConsultaDeItemDoPedidoDto> getItens() {
+        return this.itens;
+    }
 }

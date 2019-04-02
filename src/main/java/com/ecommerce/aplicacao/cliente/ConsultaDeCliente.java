@@ -26,34 +26,41 @@ public class ConsultaDeCliente implements ConsultorDeCliente {
 
     @Override
     public ObjetoDto<Cliente> consultarPor(long id) throws ExcecaoDeAplicacao, NotFoundException {
-        return mapearClienteDto(obterObjetoDeDominio(id));
+        return mapearClienteDto(obterPor(id));
     }
 
     private ClienteDto mapearClienteDto(Cliente clienteEncontrado) {
         Endereco endereco = clienteEncontrado.getEndereco();
 
-        EnderecoDto enderecoDto = new EnderecoDto(endereco.getRua(), endereco.getCidade(), endereco.getBairro(),
-                endereco.getCep(), endereco.getEstado());
+        EnderecoDto enderecoDto = new EnderecoDto(
+            endereco.getRua(), 
+            endereco.getCidade(), 
+            endereco.getBairro(),
+            endereco.getCep(), 
+            endereco.getEstado());
 
-        ClienteDto clienteDto = new ClienteDto(clienteEncontrado.getId(), clienteEncontrado.getNome(),
-                clienteEncontrado.getEmail(), clienteEncontrado.getSenha(), enderecoDto);
+        ClienteDto clienteDto = new ClienteDto(
+            clienteEncontrado.getId(),
+            clienteEncontrado.getNome(),
+            clienteEncontrado.getEmail(),
+            clienteEncontrado.getSenha(),
+            enderecoDto);
 
         return clienteDto;
     }
 
     @Override
-    public Cliente obterObjetoDeDominio(long id) throws NotFoundException {
-        Cliente clienteEncontrado = repositorio.findById(id);
-
-        if (clienteEncontrado == null)
-            throw new NotFoundException("Cliente não encontrado");
+    public Cliente obterPor(long id) throws NotFoundException {
+        Cliente clienteEncontrado = repositorio.findById(id)
+            .orElseThrow(() -> new NotFoundException("Cliente não encontrado"));
 
         return clienteEncontrado;
     }
 
     @Override
-    public List<ObjetoDto<Cliente>> obterTodos() {
-        List<Cliente> todosOsClientes = repositorio.findAll();
-        return todosOsClientes.stream().map(cliente -> mapearClienteDto(cliente)).collect(Collectors.toList());
+    public List<ObjetoDto<Cliente>> consultarTodos() {
+        return repositorio.findAll().stream()
+            .map(cliente -> mapearClienteDto(cliente))
+            .collect(Collectors.toList());
     }
 }

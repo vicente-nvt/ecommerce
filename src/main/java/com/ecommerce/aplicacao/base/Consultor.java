@@ -9,6 +9,6 @@ import javassist.NotFoundException;
 public interface Consultor<T> {
 
     ObjetoDto<T> consultarPor(long id) throws ExcecaoDeAplicacao, NotFoundException;
-    T obterObjetoDeDominio(long id) throws NotFoundException;
-	List<ObjetoDto<T>> obterTodos();
+	List<ObjetoDto<T>> consultarTodos();
+    T obterPor(long id) throws NotFoundException;
 }

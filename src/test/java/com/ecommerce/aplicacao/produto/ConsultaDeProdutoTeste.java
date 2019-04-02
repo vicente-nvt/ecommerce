@@ -7,6 +7,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 import com.ecommerce.aplicacao.ExcecaoDeAplicacao;
 import com.ecommerce.aplicacao.categoria.CategoriaDto;
@@ -41,6 +42,7 @@ public class ConsultaDeProdutoTeste {
     private Categoria categoria;
     private Produto produto;
     private ConsultaDeProduto consultaDeProduto;
+    private Optional<Produto> optionalProduto;
 
     @Before
     public void inicializar() throws ExcecaoDeDominio {
@@ -56,13 +58,13 @@ public class ConsultaDeProdutoTeste {
             .comFoto(foto)
             .comCategoria(categoria)
             .construir();
-        
+        optionalProduto = Optional.of(produto);
         consultaDeProduto = new ConsultaDeProduto(repositorio);
     }
 
     @Test
     public void deveConsultarUmProduto() throws ExcecaoDeDominio, ExcecaoDeAplicacao, NotFoundException {
-        when(repositorio.findById(anyLong())).thenReturn(produto);
+        when(repositorio.findById(anyLong())).thenReturn(optionalProduto);
         CategoriaDto categoriaDto = new CategoriaDto(idDaCategoria, nomeDaCategoria);
         ProdutoDto produtoEsperado = new ProdutoDto(id, nome, preco, quantidade, foto, categoriaDto);
         
@@ -73,9 +75,9 @@ public class ConsultaDeProdutoTeste {
  
     @Test
     public void deveObterUmProduto() throws NotFoundException {
-        when(repositorio.findById(anyLong())).thenReturn(produto);
+        when(repositorio.findById(anyLong())).thenReturn(optionalProduto);
 
-        Produto produtoEncontrado = consultaDeProduto.obterObjetoDeDominio(id);
+        Produto produtoEncontrado = consultaDeProduto.obterPor(id);
 
         assertEquals(produto, produtoEncontrado);
     }
@@ -84,8 +86,8 @@ public class ConsultaDeProdutoTeste {
     public void naoDeveGerarResultadoQuandoOProdutoNaoExistir() throws NotFoundException {
         excecaoEsperada.expect(NotFoundException.class);
         excecaoEsperada.expectMessage("Produto não encontrado");
-        when(repositorio.findById(anyLong())).thenReturn(null);
+        when(repositorio.findById(anyLong())).thenReturn(Optional.empty());
 
-        consultaDeProduto.obterObjetoDeDominio(id);
+        consultaDeProduto.obterPor(id);
     }
 }

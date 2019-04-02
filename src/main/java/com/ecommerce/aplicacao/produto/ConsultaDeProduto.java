@@ -27,7 +27,7 @@ public class ConsultaDeProduto implements ConsultorDeProduto {
 
     @Override
     public ObjetoDto<Produto> consultarPor(long id) throws ExcecaoDeAplicacao, NotFoundException {
-        return mapearProdutoDto(obterObjetoDeDominio(id));
+        return mapearProdutoDto(obterPor(id));
     }
 
     private ProdutoDto mapearProdutoDto(Produto produto) {
@@ -44,17 +44,15 @@ public class ConsultaDeProduto implements ConsultorDeProduto {
     }
 
     @Override
-    public Produto obterObjetoDeDominio(long id) throws NotFoundException {
-        Produto produtoEncontrado = repositorio.findById(id);
-
-        if (produtoEncontrado == null)
-            throw new NotFoundException("Produto não encontrado");
+    public Produto obterPor(long id) throws NotFoundException {
+        Produto produtoEncontrado = repositorio.findById(id)
+            .orElseThrow(() -> new NotFoundException("Produto não encontrado"));
 
         return produtoEncontrado;
     }
 
     @Override
-    public List<ObjetoDto<Produto>> obterTodos() {
+    public List<ObjetoDto<Produto>> consultarTodos() {
         List<Produto> todosOsProdutos = repositorio.findAll();
         return todosOsProdutos.stream()
             .map(produto -> mapearProdutoDto(produto))

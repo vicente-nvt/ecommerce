@@ -102,7 +102,7 @@ public class ControllerBase<T> {
     public ResponseEntity<List<ObjetoDto<T>>> obterTodos() {
         List<ObjetoDto<T>> listaDeObjetos;
         try {
-            listaDeObjetos = consultor.obterTodos();
+            listaDeObjetos = consultor.consultarTodos();
         } catch (Exception e) {
             return new ResponseEntity<List<ObjetoDto<T>>>(HttpStatus.BAD_REQUEST);
         }

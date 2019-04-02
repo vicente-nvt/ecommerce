@@ -10,7 +10,7 @@ public class ClienteDto implements ObjetoDto<Cliente>{
     private String senha;
     private EnderecoDto endereco;
     private long id;
-
+    
     public ClienteDto(long id, String nome, String email, String senha, EnderecoDto endereco) {
         this.id = id;
         this.nome = nome;
@@ -22,17 +22,22 @@ public class ClienteDto implements ObjetoDto<Cliente>{
     public void setNome(String nome){
         this.nome = nome;
     }
-
+    
     public void setEmail(String email){
         this.email = email;
     }
-
+    
     public void setSenha(String senha){
         this.senha = senha;
     }
-
+    
     public void setEndereco(EnderecoDto endereco){
         this.endereco = endereco;
+    }
+
+    @Override
+    public long getId() {
+        return this.id;
     }
 
     public String getNome(){
@@ -54,11 +59,6 @@ public class ClienteDto implements ObjetoDto<Cliente>{
     @Override
     public void setId(long id) {
         this.id = id;
-    }
-
-    @Override
-    public long getId() {
-        return this.id;
     }
 
     public boolean equals(ClienteDto outroDto) {

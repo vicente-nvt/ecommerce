@@ -27,7 +27,7 @@ public class RemocaoDeProdutoTeste {
         RemocaoDeProduto remocaoDeProduto = new RemocaoDeProduto(repositorio, consultaDeProduto);
         Produto produtoArmazenado = ProdutoBuilder.umProduto().construir();
         doNothing().when(repositorio).delete(any(Produto.class));
-        when(consultaDeProduto.obterObjetoDeDominio(anyLong())).thenReturn(produtoArmazenado);
+        when(consultaDeProduto.obterPor(anyLong())).thenReturn(produtoArmazenado);
 
         remocaoDeProduto.remover(produtoArmazenado.getId());
 

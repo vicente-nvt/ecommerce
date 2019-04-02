@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ItemDoPedidoRepositorio extends JpaRepository<ItemDoPedido, Long> {
-    ItemDoPedido findById(long id);
+
 }

@@ -21,7 +21,7 @@ public class RemocaoDeCliente implements RemovedorDeCliente {
 
 	@Override
     public void remover(long id) throws ExcecaoDeAplicacao, NotFoundException {
-        Cliente clienteArmazenado = consultaDeCliente.obterObjetoDeDominio(id);
+        Cliente clienteArmazenado = consultaDeCliente.obterPor(id);
 
         repositorio.delete(clienteArmazenado);
     }

@@ -45,7 +45,7 @@ public class CriacaoDePedidoTeste {
         Pedido pedido = PedidoBuilder.umPedido().construir();
         Cliente cliente = ClienteBuilder.umCliente().comId(idDoCliente).construir();
         when(repositorio.save(any(Pedido.class))).thenReturn(pedido);
-        when(consultorDeCliente.obterObjetoDeDominio(anyLong())).thenReturn(cliente);
+        when(consultorDeCliente.obterPor(anyLong())).thenReturn(cliente);
 
         criacaoDePedido.criar(pedidoDto);
 

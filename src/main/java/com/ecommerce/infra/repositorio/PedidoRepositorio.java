@@ -3,7 +3,9 @@ package com.ecommerce.infra.repositorio;
 import com.ecommerce.dominio.entidades.Pedido;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface PedidoRepositorio extends JpaRepository<Pedido, Long>{
-    Pedido findById(long id);
+@Repository
+public interface PedidoRepositorio extends JpaRepository<Pedido, Long> {
+
 }

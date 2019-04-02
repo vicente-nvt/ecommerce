@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.HashSet;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -20,7 +21,7 @@ public class Pedido extends Entidade {
     private Cliente cliente;
     private Date data;
     private StatusDoPedido status;
-    @OneToMany
+    @OneToMany(mappedBy = "pedido", fetch = FetchType.EAGER)
     private Collection<ItemDoPedido> itens;
 
     protected Pedido() { }
@@ -71,4 +72,8 @@ public class Pedido extends Entidade {
 	public Collection<ItemDoPedido> getItens() {
 		return Collections.unmodifiableCollection(this.itens);
 	}
+
+	public StatusDoPedido getStatus() {
+		return this.status;
+    }
 }

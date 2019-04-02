@@ -27,7 +27,7 @@ public class RemocaoDeClienteTeste {
         RemocaoDeCliente remocaoDeCliente = new RemocaoDeCliente(repositorio, consultaDeCliente);
         Cliente clienteArmazenado = ClienteBuilder.umCliente().construir();
         doNothing().when(repositorio).delete(any(Cliente.class));
-        when(consultaDeCliente.obterObjetoDeDominio(anyLong())).thenReturn(clienteArmazenado);
+        when(consultaDeCliente.obterPor(anyLong())).thenReturn(clienteArmazenado);
 
         remocaoDeCliente.remover(clienteArmazenado.getId());
 

@@ -33,7 +33,7 @@ public class EdicaoDeProduto implements EditorDeProduto {
         ProdutoDto produtoDto = (ProdutoDto) dto;
         CategoriaDto categoriaDto = produtoDto.getCategoria();
 
-        Produto produtoEncontrado = consultaDeProduto.obterObjetoDeDominio(produtoDto.getId());
+        Produto produtoEncontrado = consultaDeProduto.obterPor(produtoDto.getId());
 
         try {
             produtoEncontrado.alterarNome(produtoDto.getNome());
@@ -46,7 +46,7 @@ public class EdicaoDeProduto implements EditorDeProduto {
         produtoEncontrado.mudarFoto(produtoDto.getFoto());
         produtoEncontrado.trocarCategoria( 
             categoriaDto.getId() > 0 
-            ? consultaDeCategoria.obterObjetoDeDominio(categoriaDto.getId())
+            ? consultaDeCategoria.obterPor(categoriaDto.getId())
             : null);
 
         repositorio.save(produtoEncontrado);

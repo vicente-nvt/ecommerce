@@ -24,7 +24,7 @@ public class RemocaoDeCategoria implements RemovedorDeCategoria {
 
     @Override
     public void remover(long id) throws ExcecaoDeAplicacao, NotFoundException {
-        Categoria categoria = consultorDeCategoria.obterObjetoDeDominio(id);
+        Categoria categoria = consultorDeCategoria.obterPor(id);
 
         repositorio.delete(categoria);
     }

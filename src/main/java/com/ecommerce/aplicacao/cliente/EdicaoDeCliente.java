@@ -30,7 +30,7 @@ public class EdicaoDeCliente implements EditorDeCliente {
         ClienteDto clienteDto = (ClienteDto) dto;
         EnderecoDto enderecoDto = clienteDto.getEndereco();
 
-        Cliente clienteArmazenado = consultorDeCliente.obterObjetoDeDominio(dto.getId());
+        Cliente clienteArmazenado = consultorDeCliente.obterPor(dto.getId());
 
         try {
             Endereco novoEndereco = new Endereco(

@@ -25,7 +25,7 @@ public class ConsultaDeCategoria implements ConsultorDeCategoria {
 
     @Override
     public ObjetoDto<Categoria> consultarPor(long id) throws ExcecaoDeAplicacao, NotFoundException {
-        return mapearCategoriaDto(obterObjetoDeDominio(id));
+        return mapearCategoriaDto(obterPor(id));
     }
 
     private CategoriaDto mapearCategoriaDto(Categoria categoriaEncontrada) {
@@ -38,17 +38,15 @@ public class ConsultaDeCategoria implements ConsultorDeCategoria {
     }
 
     @Override
-    public Categoria obterObjetoDeDominio(long id) throws NotFoundException {
-        Categoria categoriaEncontrada = repositorio.findById(id);
-
-        if (categoriaEncontrada == null)
-            throw new NotFoundException("Categoria não encontrada");
+    public Categoria obterPor(long id) throws NotFoundException {
+        Categoria categoriaEncontrada = repositorio.findById(id)
+            .orElseThrow(() -> new NotFoundException("Categoria não encontrada"));
 
         return categoriaEncontrada;
     }
 
     @Override
-    public List<ObjetoDto<Categoria>> obterTodos() {
+    public List<ObjetoDto<Categoria>> consultarTodos() {
         List<Categoria> todasAsCategorias = repositorio.findAll();
         return todasAsCategorias.stream()
             .map(categoria -> mapearCategoriaDto(categoria))

@@ -30,7 +30,7 @@ public class RemocaoDeCategoriaTeste {
             .comNome("Categoria A")
             .construir();
         doNothing().when(repositorio).delete(any(Categoria.class));
-        when(consultaDeCategoria.obterObjetoDeDominio(anyLong())).thenReturn(categoriaArmazenada);
+        when(consultaDeCategoria.obterPor(anyLong())).thenReturn(categoriaArmazenada);
 
         remocaoDeCategoria.remover(categoriaArmazenada.getId());
 

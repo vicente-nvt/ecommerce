@@ -27,7 +27,7 @@ public class EdicaoDeCategoriaTeste {
         InOrder emOrdem = inOrder(repositorio, consultaDeCategoria);
         Categoria categoriaArmazenada = new Categoria("Categoria A");
         when(repositorio.save(any(Categoria.class))).thenReturn(categoriaArmazenada);
-        when(consultaDeCategoria.obterObjetoDeDominio(anyLong())).thenReturn(categoriaArmazenada);
+        when(consultaDeCategoria.obterPor(anyLong())).thenReturn(categoriaArmazenada);
         final String novoNome = "Categoria B";
         CategoriaDto categoriaDto = new CategoriaDto(novoNome);
         EdicaoDeCategoria edicaoDeCategoria = new EdicaoDeCategoria(repositorio, consultaDeCategoria);
@@ -35,7 +35,7 @@ public class EdicaoDeCategoriaTeste {
         edicaoDeCategoria.editar(categoriaDto);
 
         assertEquals(novoNome, categoriaArmazenada.getNome());
-        emOrdem.verify(consultaDeCategoria, times(1)).obterObjetoDeDominio(anyLong());
+        emOrdem.verify(consultaDeCategoria, times(1)).obterPor(anyLong());
         emOrdem.verify(repositorio, times(1)).save(any(Categoria.class));
     }
 }

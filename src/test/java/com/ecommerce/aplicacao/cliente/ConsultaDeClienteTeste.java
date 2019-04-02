@@ -6,6 +6,8 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.util.Optional;
+
 import com.ecommerce.aplicacao.ExcecaoDeAplicacao;
 import com.ecommerce.builders.ClienteBuilder;
 import com.ecommerce.builders.EnderecoBuilder;
@@ -40,6 +42,7 @@ public class ConsultaDeClienteTeste {
     private ConsultaDeCliente consultaDeCliente;
     private Cliente cliente;
     private Endereco endereco;
+    private Optional<Cliente> optionalCliente;
 
     @Before
     public void inicializar() throws ExcecaoDeDominio {
@@ -51,13 +54,14 @@ public class ConsultaDeClienteTeste {
         cliente = ClienteBuilder.umCliente()
             .comNome(nome).comEmail(email).comSenha(senha)
             .comEndereco(endereco).comId(id).construir();
+        optionalCliente = Optional.of(cliente);
     }
 
     @Test
     public void deveConsultarUmCliente() throws ExcecaoDeAplicacao, NotFoundException {
         final EnderecoDto enderecoDto = new EnderecoDto(rua, cidade, bairro, cep, estado);
         ClienteDto clienteEsperado = new ClienteDto(id, nome, email, cliente.getSenha(), enderecoDto);
-        when(repositorio.findById(anyLong())).thenReturn(cliente);
+        when(repositorio.findById(anyLong())).thenReturn(optionalCliente);
 
         ClienteDto clienteEncontrado = (ClienteDto) consultaDeCliente.consultarPor(anyLong());
 
@@ -66,9 +70,9 @@ public class ConsultaDeClienteTeste {
 
     @Test
     public void deveObterUmCliente() throws NotFoundException {
-        when(repositorio.findById(anyLong())).thenReturn(cliente);
+        when(repositorio.findById(anyLong())).thenReturn(optionalCliente);
 
-        Cliente clienteEncontrado = consultaDeCliente.obterObjetoDeDominio(id);
+        Cliente clienteEncontrado = consultaDeCliente.obterPor(id);
 
         assertEquals(cliente, clienteEncontrado);
     }
@@ -77,7 +81,7 @@ public class ConsultaDeClienteTeste {
     public void naoDeveGerarResultadoQuandoOClienteNaoExistir() throws ExcecaoDeAplicacao, NotFoundException {
         excecaoEsperada.expect(NotFoundException.class);
         excecaoEsperada.expectMessage("Cliente não encontrado");
-        when(repositorio.findById(anyLong())).thenReturn(null);
+        when(repositorio.findById(anyLong())).thenReturn(Optional.empty());
 
         consultaDeCliente.consultarPor(anyLong());
     }

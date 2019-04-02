@@ -53,7 +53,7 @@ public class EdicaoDeClienteTeste {
             .comSenha(senha)
             .comEndereco(endereco)
             .construir();
-        when(consultaDeCliente.obterObjetoDeDominio(anyLong())).thenReturn(clienteArmazenado);
+        when(consultaDeCliente.obterPor(anyLong())).thenReturn(clienteArmazenado);
         when(repositorio.save(clienteArmazenado)).thenReturn(clienteAlterado);
         EnderecoDto enderecoDto = new EnderecoDto(rua, cidade, bairro, cep, estado);
         ClienteDto clienteDto = new ClienteDto(id, nome, email, senha, enderecoDto);
@@ -62,7 +62,7 @@ public class EdicaoDeClienteTeste {
         edicaoDeCliente.editar(clienteDto);
 
         assertTrue(clienteAlterado.equals(clienteArmazenado));
-        emOrdem.verify(consultaDeCliente, times(1)).obterObjetoDeDominio(anyLong());
+        emOrdem.verify(consultaDeCliente, times(1)).obterPor(anyLong());
         emOrdem.verify(repositorio, times(1)).save(any(Cliente.class));
     }
 }

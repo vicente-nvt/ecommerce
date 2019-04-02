@@ -27,7 +27,7 @@ public class EdicaoDeCategoria implements EditorDeCategoria {
     @Override
     public void editar(ObjetoDto<Categoria> dto) throws ExcecaoDeAplicacao, NotFoundException {
         CategoriaDto categoriaDto = (CategoriaDto) dto;
-        Categoria categoria = consultorDeCategoria.obterObjetoDeDominio(dto.getId());
+        Categoria categoria = consultorDeCategoria.obterPor(dto.getId());
 
         try {
             categoria.atualizarNome(categoriaDto.getNome());
