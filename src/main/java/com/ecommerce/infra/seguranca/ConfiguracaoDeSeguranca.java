@@ -15,8 +15,15 @@ public class ConfiguracaoDeSeguranca extends WebSecurityConfigurerAdapter {
 
     private ValidadorDeUsuario validador;
     private CodificacaoDeSenha codificadorDeSenha;
-    private static final String[] ListaDeExclusao = { "/v2/api-docs", "/swagger-resources", "/swagger-resources/**",
-            "/configuration/ui", "/configuration/security", "/swagger-ui.html", "/webjars/**" };
+    private static final String[] ListaDePermitidos = { 
+        "/v2/api-docs",
+        "/swagger-resources",
+        "/swagger-resources/**",
+        "/configuration/ui",
+        "/configuration/security",
+        "/swagger-ui.html",
+        "/webjars/**"
+    };
 
     @Autowired
     public ConfiguracaoDeSeguranca(ValidadorDeUsuario validador, CodificacaoDeSenha codificadorDeSenha) {
@@ -26,11 +33,13 @@ public class ConfiguracaoDeSeguranca extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.csrf().disable().authorizeRequests().antMatchers(ListaDeExclusao).permitAll()
-                .antMatchers(HttpMethod.POST, "/rest/login/").permitAll().anyRequest().authenticated().and()
-                .addFilterBefore(new FiltroDeLogin("/rest/login/", authenticationManager()),
-                        UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new FiltroDeAutenticacao(), UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.csrf().disable().authorizeRequests()
+            .antMatchers(ListaDePermitidos).permitAll()
+            .antMatchers(HttpMethod.POST, "/rest/login/").permitAll()
+            .anyRequest().authenticated()
+            .and()
+            .addFilterBefore(new FiltroDeLogin("/rest/login/", authenticationManager()), UsernamePasswordAuthenticationFilter.class)
+            .addFilterBefore(new FiltroDeAutenticacao(), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override

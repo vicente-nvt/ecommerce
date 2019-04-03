@@ -30,8 +30,9 @@ public class FiltroDeLogin extends AbstractAuthenticationProcessingFilter {
 
         Credenciais credenciais = new ObjectMapper().readValue(request.getInputStream(), Credenciais.class);
 
-        Authentication autenticacao = getAuthenticationManager().authenticate(new UsernamePasswordAuthenticationToken(
-                credenciais.getUsername(), credenciais.getPassword(), Collections.emptyList()));
+        Authentication autenticacao = getAuthenticationManager()
+            .authenticate(new UsernamePasswordAuthenticationToken(
+                credenciais.getUsuario(), credenciais.getSenha(), Collections.emptyList()));
 
         return autenticacao;
     }
@@ -42,5 +43,4 @@ public class FiltroDeLogin extends AbstractAuthenticationProcessingFilter {
 
         AutenticadorDeToken.addAuthentication(response, auth.getName());
     }
-
 }

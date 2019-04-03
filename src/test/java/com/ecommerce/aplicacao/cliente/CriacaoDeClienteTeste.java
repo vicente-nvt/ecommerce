@@ -7,12 +7,12 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.ecommerce.aplicacao.CodificadorDeSenha;
 import com.ecommerce.aplicacao.ExcecaoDeAplicacao;
 import com.ecommerce.builders.ClienteBuilder;
 import com.ecommerce.builders.EnderecoBuilder;
 import com.ecommerce.dominio.ExcecaoDeDominio;
 import com.ecommerce.dominio.entidades.Cliente;
-import com.ecommerce.dominio.entidades.CodificadorDeSenha;
 import com.ecommerce.dominio.objetosdevalor.Endereco;
 import com.ecommerce.infra.repositorio.ClienteRepositorio;
 import com.ecommerce.infra.seguranca.CodificacaoDeSenha;

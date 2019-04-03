@@ -1,10 +1,10 @@
 package com.ecommerce.aplicacao.cliente;
 
+import com.ecommerce.aplicacao.CodificadorDeSenha;
 import com.ecommerce.aplicacao.ExcecaoDeAplicacao;
 import com.ecommerce.aplicacao.base.ObjetoDto;
 import com.ecommerce.dominio.ExcecaoDeDominio;
 import com.ecommerce.dominio.entidades.Cliente;
-import com.ecommerce.dominio.entidades.CodificadorDeSenha;
 import com.ecommerce.dominio.objetosdevalor.Endereco;
 import com.ecommerce.infra.repositorio.ClienteRepositorio;
 
@@ -33,10 +33,18 @@ public class CriacaoDeCliente implements CriadorDeCliente {
 
         Cliente cliente;
         try {
-            Endereco endereco = new Endereco(enderecoDto.getRua(), enderecoDto.getCidade(), enderecoDto.getBairro(),
-                    enderecoDto.getCep(), enderecoDto.getEstado());
-            String senha = codificadorDeSenha.codificar(clienteDto.getSenha());
-            cliente = new Cliente(clienteDto.getNome(), clienteDto.getEmail(), senha, endereco);
+            Endereco endereco = new Endereco(
+                enderecoDto.getRua(),
+                enderecoDto.getCidade(),
+                enderecoDto.getBairro(),
+                enderecoDto.getCep(),
+                enderecoDto.getEstado());
+
+            cliente = new Cliente(
+                clienteDto.getNome(), 
+                clienteDto.getEmail(), 
+                codificadorDeSenha.codificar(clienteDto.getSenha()), 
+                endereco);
         } catch (ExcecaoDeDominio e) {
             throw new ExcecaoDeAplicacao(e.getMessage());
         }

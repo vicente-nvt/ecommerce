@@ -2,7 +2,7 @@ package com.ecommerce.infra.seguranca;
 
 import java.security.MessageDigest;
 
-import com.ecommerce.dominio.entidades.CodificadorDeSenha;
+import com.ecommerce.aplicacao.CodificadorDeSenha;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
