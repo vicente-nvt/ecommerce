@@ -1,7 +1,7 @@
 package com.ecommerce.aplicacao.cliente;
 
 import com.ecommerce.aplicacao.ExcecaoDeAplicacao;
-import com.ecommerce.aplicacao.base.ObjetoDto;
+import com.ecommerce.aplicacao.base.CadastroDto;
 import com.ecommerce.dominio.ExcecaoDeDominio;
 import com.ecommerce.dominio.entidades.Cliente;
 import com.ecommerce.dominio.objetosdevalor.Endereco;
@@ -25,12 +25,12 @@ public class EdicaoDeCliente implements EditorDeCliente {
 	}
 
 	@Override
-    public void editar(ObjetoDto<Cliente> dto) throws ExcecaoDeAplicacao, NotFoundException {
+    public void editar(long id, CadastroDto<Cliente> dto) throws ExcecaoDeAplicacao, NotFoundException {
 
-        ClienteDto clienteDto = (ClienteDto) dto;
-        EnderecoDto enderecoDto = clienteDto.getEndereco();
+        CadastroDeClienteDto clienteDto = (CadastroDeClienteDto) dto;
+        CadastroDeEnderecoDto enderecoDto = clienteDto.getEndereco();
 
-        Cliente clienteArmazenado = consultorDeCliente.obterPor(dto.getId());
+        Cliente clienteArmazenado = consultorDeCliente.obterPor(id);
 
         try {
             Endereco novoEndereco = new Endereco(

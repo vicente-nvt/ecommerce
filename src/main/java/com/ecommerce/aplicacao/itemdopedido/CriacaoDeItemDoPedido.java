@@ -1,7 +1,7 @@
 package com.ecommerce.aplicacao.itemdopedido;
 
 import com.ecommerce.aplicacao.ExcecaoDeAplicacao;
-import com.ecommerce.aplicacao.base.ObjetoDto;
+import com.ecommerce.aplicacao.base.CadastroDto;
 import com.ecommerce.aplicacao.pedido.ConsultorDePedido;
 import com.ecommerce.aplicacao.produto.ConsultorDeProduto;
 import com.ecommerce.dominio.ExcecaoDeDominio;
@@ -31,7 +31,7 @@ public class CriacaoDeItemDoPedido implements CriadorDeItemDoPedido {
     }
 
     @Override
-    public long criar(ObjetoDto<ItemDoPedido> dto) throws ExcecaoDeAplicacao, ExcecaoDeDominio, NotFoundException {
+    public long criar(CadastroDto<ItemDoPedido> dto) throws ExcecaoDeAplicacao, ExcecaoDeDominio, NotFoundException {
         CriacaoDeItemDoPeditoDto itemDoPedidoDto = (CriacaoDeItemDoPeditoDto) dto;
 
         Produto produto = consultorDeProduto.obterPor(itemDoPedidoDto.getIdDoProduto());

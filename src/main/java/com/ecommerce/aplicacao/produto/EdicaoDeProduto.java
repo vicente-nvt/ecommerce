@@ -1,8 +1,7 @@
 package com.ecommerce.aplicacao.produto;
 
 import com.ecommerce.aplicacao.ExcecaoDeAplicacao;
-import com.ecommerce.aplicacao.base.ObjetoDto;
-import com.ecommerce.aplicacao.categoria.CategoriaDto;
+import com.ecommerce.aplicacao.base.CadastroDto;
 import com.ecommerce.aplicacao.categoria.ConsultaDeCategoria;
 import com.ecommerce.dominio.ExcecaoDeDominio;
 import com.ecommerce.dominio.entidades.Produto;
@@ -29,11 +28,10 @@ public class EdicaoDeProduto implements EditorDeProduto {
 	}
 
 	@Override
-    public void editar(ObjetoDto<Produto> dto) throws ExcecaoDeAplicacao, NotFoundException {
-        ProdutoDto produtoDto = (ProdutoDto) dto;
-        CategoriaDto categoriaDto = produtoDto.getCategoria();
+    public void editar(long id, CadastroDto<Produto> dto) throws ExcecaoDeAplicacao, NotFoundException {
+        CadastroDeProdutoDto produtoDto = (CadastroDeProdutoDto) dto;
 
-        Produto produtoEncontrado = consultaDeProduto.obterPor(produtoDto.getId());
+        Produto produtoEncontrado = consultaDeProduto.obterPor(id);
 
         try {
             produtoEncontrado.alterarNome(produtoDto.getNome());
@@ -45,8 +43,8 @@ public class EdicaoDeProduto implements EditorDeProduto {
         produtoEncontrado.definirQuantidade(produtoDto.getQuantidade());
         produtoEncontrado.mudarFoto(produtoDto.getFoto());
         produtoEncontrado.trocarCategoria( 
-            categoriaDto.getId() > 0 
-            ? consultaDeCategoria.obterPor(categoriaDto.getId())
+            produtoDto.getIdDaCategoria() > 0 
+            ? consultaDeCategoria.obterPor(produtoDto.getIdDaCategoria())
             : null);
 
         repositorio.save(produtoEncontrado);

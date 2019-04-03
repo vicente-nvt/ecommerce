@@ -1,7 +1,7 @@
 package com.ecommerce.aplicacao.categoria;
 
 import com.ecommerce.aplicacao.ExcecaoDeAplicacao;
-import com.ecommerce.aplicacao.base.ObjetoDto;
+import com.ecommerce.aplicacao.base.CadastroDto;
 import com.ecommerce.dominio.ExcecaoDeDominio;
 import com.ecommerce.dominio.entidades.Categoria;
 import com.ecommerce.infra.repositorio.CategoriaRepositorio;
@@ -20,8 +20,8 @@ public class CriacaoDeCategoria implements CriadorDeCategoria {
     }
 
     @Override
-    public long criar(ObjetoDto<Categoria> dto) throws ExcecaoDeAplicacao {
-        String nomeDaCategoria = ((CategoriaDto) dto).getNome();
+    public long criar(CadastroDto<Categoria> dto) throws ExcecaoDeAplicacao {
+        String nomeDaCategoria = ((CadastroDeCategoriaDto) dto).getNome();
 
         Categoria categoria;
         try {

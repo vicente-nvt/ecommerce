@@ -1,9 +1,9 @@
 package com.ecommerce.aplicacao.itemdopedido;
 
-import com.ecommerce.aplicacao.base.ObjetoDto;
+import com.ecommerce.aplicacao.base.CadastroDto;
 import com.ecommerce.dominio.entidades.ItemDoPedido;
 
-public class CriacaoDeItemDoPeditoDto implements ObjetoDto<ItemDoPedido> {
+public class CriacaoDeItemDoPeditoDto implements CadastroDto<ItemDoPedido> {
 
     private long id;
     private long idDoProduto;
@@ -31,15 +31,5 @@ public class CriacaoDeItemDoPeditoDto implements ObjetoDto<ItemDoPedido> {
 
     public void setIdDoPedido(long idDoPedido) {
         this.idDoPedido = idDoPedido;
-    }
-
-    @Override
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    @Override
-    public long getId() {
-        return this.id;
     }
 }

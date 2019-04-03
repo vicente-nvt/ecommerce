@@ -18,8 +18,8 @@ public class ClienteDto implements ObjetoDto<Cliente>{
         this.senha = senha;
         this.endereco = endereco;
     }
-    
-    public void setNome(String nome){
+
+	public void setNome(String nome){
         this.nome = nome;
     }
     

@@ -1,7 +1,7 @@
 package com.ecommerce.aplicacao.produto;
 
 import com.ecommerce.aplicacao.ExcecaoDeAplicacao;
-import com.ecommerce.aplicacao.base.ObjetoDto;
+import com.ecommerce.aplicacao.base.CadastroDto;
 import com.ecommerce.aplicacao.categoria.ConsultorDeCategoria;
 import com.ecommerce.dominio.ExcecaoDeDominio;
 import com.ecommerce.dominio.entidades.Categoria;
@@ -26,11 +26,10 @@ public class CriacaoDeProduto implements CriadorDeProduto {
     }
 
     @Override
-    public long criar(ObjetoDto<Produto> dto) throws ExcecaoDeAplicacao, ExcecaoDeDominio, NotFoundException {
-        ProdutoDto produtoDto = (ProdutoDto) dto;
+    public long criar(CadastroDto<Produto> dto) throws ExcecaoDeAplicacao, ExcecaoDeDominio, NotFoundException {
+        CadastroDeProdutoDto produtoDto = (CadastroDeProdutoDto) dto;
 
-        long idDaCategoria = produtoDto.getCategoria().getId();
-        Categoria categoria = consultorDeCategoria.obterPor(idDaCategoria);
+        Categoria categoria = consultorDeCategoria.obterPor(produtoDto.getIdDaCategoria());
 
         Produto produto = new Produto(
             produtoDto.getNome(),

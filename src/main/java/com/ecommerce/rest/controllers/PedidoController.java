@@ -1,14 +1,17 @@
 package com.ecommerce.rest.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.ecommerce.aplicacao.ExcecaoDeAplicacao;
+import com.ecommerce.aplicacao.base.ObjetoDto;
+import com.ecommerce.aplicacao.pedido.ConsultaDePedidoDto;
+import com.ecommerce.aplicacao.pedido.ConsultorDePedido;
+import com.ecommerce.aplicacao.pedido.CadastroDePedidoDto;
 import com.ecommerce.aplicacao.pedido.CriadorDePedido;
 import com.ecommerce.aplicacao.pedido.FechadorDePedido;
-import com.ecommerce.aplicacao.base.ObjetoDto;
-import com.ecommerce.aplicacao.pedido.ConsultorDePedido;
-import com.ecommerce.aplicacao.pedido.CriacaoDePedidoDto;
 import com.ecommerce.dominio.entidades.Pedido;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,15 +32,18 @@ import javassist.NotFoundException;
 public class PedidoController extends ControllerBase<Pedido> {
 
     private FechadorDePedido fechadorDePedido;
+    private ConsultorDePedido consultorDePedido;
+
 
     @Autowired
     public PedidoController(CriadorDePedido criadorDePedido, ConsultorDePedido consultorDePedido, FechadorDePedido fechadorDePedido) {
-        super(criadorDePedido, consultorDePedido, null, null);
+        super(criadorDePedido, null, null);
+        this.consultorDePedido = consultorDePedido;
         this.fechadorDePedido = fechadorDePedido;
     }
 
     @PostMapping("/")
-    public ResponseEntity<Object> doPost(@RequestBody CriacaoDePedidoDto dto, HttpServletRequest request) {
+    public ResponseEntity<Object> doPost(@RequestBody CadastroDePedidoDto dto, HttpServletRequest request) {
         return executarPost(dto, request);
     }
 
@@ -55,13 +61,33 @@ public class PedidoController extends ControllerBase<Pedido> {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ObjetoDto<Pedido>> doGet(@PathVariable long id) {
-        return executarGet(id);
-    }
+    public ResponseEntity<ConsultaDePedidoDto> doGet(@PathVariable long id) {
+        ObjetoDto<Pedido> pedido;
+        try {
+            pedido = consultorDePedido.consultarPor(id);
+        } catch (ExcecaoDeAplicacao e) {
+            return new ResponseEntity<ConsultaDePedidoDto>(HttpStatus.BAD_REQUEST);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<ConsultaDePedidoDto>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<ConsultaDePedidoDto>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return new ResponseEntity<ConsultaDePedidoDto>((ConsultaDePedidoDto) pedido, HttpStatus.OK);
+   }
 
     @GetMapping("/")
-    public ResponseEntity<List<ObjetoDto<Pedido>>> doGet() {
-        return obterTodos();
+    public ResponseEntity<List<ConsultaDePedidoDto>> doGet() {
+        List<ObjetoDto<Pedido>> listaDeObjetos;
+        try {
+            listaDeObjetos = consultorDePedido.consultarTodos();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+        
+        List<ConsultaDePedidoDto> listaDePedidos = new ArrayList<ConsultaDePedidoDto>();
+        listaDeObjetos.stream().forEach(pedido -> listaDePedidos.add((ConsultaDePedidoDto) pedido));
+        return ResponseEntity.ok().body(listaDePedidos);
     }
 
-}   
+}

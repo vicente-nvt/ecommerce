@@ -1,7 +1,7 @@
 package com.ecommerce.aplicacao.categoria;
 
 import com.ecommerce.aplicacao.ExcecaoDeAplicacao;
-import com.ecommerce.aplicacao.base.ObjetoDto;
+import com.ecommerce.aplicacao.base.CadastroDto;
 import com.ecommerce.dominio.ExcecaoDeDominio;
 import com.ecommerce.dominio.entidades.Categoria;
 import com.ecommerce.infra.repositorio.CategoriaRepositorio;
@@ -25,9 +25,9 @@ public class EdicaoDeCategoria implements EditorDeCategoria {
     }
 
     @Override
-    public void editar(ObjetoDto<Categoria> dto) throws ExcecaoDeAplicacao, NotFoundException {
-        CategoriaDto categoriaDto = (CategoriaDto) dto;
-        Categoria categoria = consultorDeCategoria.obterPor(dto.getId());
+    public void editar(long id, CadastroDto<Categoria> dto) throws ExcecaoDeAplicacao, NotFoundException {
+        CadastroDeCategoriaDto categoriaDto = (CadastroDeCategoriaDto) dto;
+        Categoria categoria = consultorDeCategoria.obterPor(id);
 
         try {
             categoria.atualizarNome(categoriaDto.getNome());

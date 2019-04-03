@@ -55,11 +55,11 @@ public class EdicaoDeClienteTeste {
             .construir();
         when(consultaDeCliente.obterPor(anyLong())).thenReturn(clienteArmazenado);
         when(repositorio.save(clienteArmazenado)).thenReturn(clienteAlterado);
-        EnderecoDto enderecoDto = new EnderecoDto(rua, cidade, bairro, cep, estado);
-        ClienteDto clienteDto = new ClienteDto(id, nome, email, senha, enderecoDto);
+        CadastroDeEnderecoDto enderecoDto = new CadastroDeEnderecoDto(rua, cidade, bairro, cep, estado);
+        CadastroDeClienteDto clienteDto = new CadastroDeClienteDto(nome, email, senha, enderecoDto);
         EdicaoDeCliente edicaoDeCliente = new EdicaoDeCliente(repositorio, consultaDeCliente);
 
-        edicaoDeCliente.editar(clienteDto);
+        edicaoDeCliente.editar(id, clienteDto);
 
         assertTrue(clienteAlterado.equals(clienteArmazenado));
         emOrdem.verify(consultaDeCliente, times(1)).obterPor(anyLong());

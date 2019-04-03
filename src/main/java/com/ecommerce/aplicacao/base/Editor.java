@@ -6,5 +6,5 @@ import javassist.NotFoundException;
 
 public interface Editor<T> {
 
-    void editar(ObjetoDto<T> dto) throws ExcecaoDeAplicacao, NotFoundException;
+    void editar(long id, CadastroDto<T> dto) throws ExcecaoDeAplicacao, NotFoundException;
 }

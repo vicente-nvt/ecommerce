@@ -6,13 +6,11 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
 
 import com.ecommerce.aplicacao.ExcecaoDeAplicacao;
-import com.ecommerce.aplicacao.categoria.CategoriaDto;
 import com.ecommerce.aplicacao.categoria.ConsultaDeCategoria;
 import com.ecommerce.builders.CategoriaBuilder;
 import com.ecommerce.builders.ProdutoBuilder;
@@ -55,13 +53,12 @@ public class EdicaoDeProdutoTeste {
             .comFoto(foto)
             .comCategoria(categoria)
             .construir();
-        CategoriaDto categoriaDto = new CategoriaDto(idDaCategoria, nomeDaCategoria);
-        ProdutoDto produtoDto = new ProdutoDto(id, nome, preco, quantidade, foto, categoriaDto);
+        CadastroDeProdutoDto produtoDto = new CadastroDeProdutoDto(nome, preco, quantidade, foto, idDaCategoria);
         when(consultaDeCategoria.obterPor(idDaCategoria)).thenReturn(categoria);
         when(consultaDeProduto.obterPor(id)).thenReturn(produtoArmazenado);
         InOrder emOrdem = inOrder(consultaDeProduto, repositorio);
 
-        edicaoDeProduto.editar(produtoDto);
+        edicaoDeProduto.editar(id, produtoDto);
 
         assertTrue(produtoAlterado.equals(produtoArmazenado));
         emOrdem.verify(consultaDeProduto, times(1)).obterPor(anyLong());

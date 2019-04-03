@@ -56,8 +56,8 @@ public class CriacaoDeClienteTeste {
                 .comEndereco(endereco).construir();
         when(repositorio.save(any(Cliente.class))).thenReturn(clienteArmazenado);
         when(codificador.codificar(anyString())).thenReturn("#$%&@");
-        EnderecoDto enderecoDto = new EnderecoDto(rua, cidade, bairro, cep, estado);
-        ClienteDto clienteDto = new ClienteDto(id, nome, email, senha, enderecoDto);
+        CadastroDeEnderecoDto enderecoDto = new CadastroDeEnderecoDto(rua, cidade, bairro, cep, estado);
+        CadastroDeClienteDto clienteDto = new CadastroDeClienteDto(nome, email, senha, enderecoDto);
 
         criacaoDeCliente.criar(clienteDto);
 
@@ -68,7 +68,7 @@ public class CriacaoDeClienteTeste {
     public void naoDeveArmazenarClienteSeOEnderecoNaoForInformado() throws ExcecaoDeAplicacao {
         excecaoEsperada.expect(ExcecaoDeAplicacao.class);
         excecaoEsperada.expectMessage("O endereço não foi informado");
-        ClienteDto clienteDto = new ClienteDto(id, nome, email, senha, null);
+        CadastroDeClienteDto clienteDto = new CadastroDeClienteDto(nome, email, senha, null);
 
         criacaoDeCliente.criar(clienteDto);
     }

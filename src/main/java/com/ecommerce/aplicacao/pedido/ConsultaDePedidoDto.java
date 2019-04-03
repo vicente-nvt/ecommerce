@@ -1,9 +1,7 @@
 package com.ecommerce.aplicacao.pedido;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 import com.ecommerce.aplicacao.base.ObjetoDto;
 import com.ecommerce.aplicacao.cliente.ClienteParaConsultaDePedidoDto;

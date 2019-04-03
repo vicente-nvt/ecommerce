@@ -1,6 +1,5 @@
 package com.ecommerce.aplicacao.produto;
 
-import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.mock;
@@ -11,7 +10,6 @@ import static org.mockito.Mockito.when;
 import java.math.BigDecimal;
 
 import com.ecommerce.aplicacao.ExcecaoDeAplicacao;
-import com.ecommerce.aplicacao.categoria.CategoriaDto;
 import com.ecommerce.aplicacao.categoria.ConsultorDeCategoria;
 import com.ecommerce.builders.CategoriaBuilder;
 import com.ecommerce.builders.ProdutoBuilder;
@@ -26,11 +24,11 @@ import javassist.NotFoundException;
 
 public class CriacaoDeProdutoTeste {
 
-    private final long id = 1;
     private final String nome = "Produto A";
     private final BigDecimal preco = new BigDecimal(1);
     private final int quantidade = 10;
     private final String foto = "www.fotos.com/produtos/1";
+    private final long idDaCategoria = 10;
 
     @Test
     public void deveArmazenarUmProduto() throws ExcecaoDeAplicacao, ExcecaoDeDominio, NotFoundException {
@@ -38,11 +36,10 @@ public class CriacaoDeProdutoTeste {
         ConsultorDeCategoria consultorDeCategoria = mock(ConsultorDeCategoria.class);
         Produto produtoCriado = ProdutoBuilder.umProduto().construir();
         when(repositorio.save(any(Produto.class))).thenReturn(produtoCriado);
-        Categoria categoria = CategoriaBuilder.umaCategoria().comId(10).comNome("Categoria A").construir();
+        Categoria categoria = CategoriaBuilder.umaCategoria().comId(idDaCategoria).comNome("Categoria A").construir();
         when(consultorDeCategoria.obterPor(anyLong())).thenReturn(categoria);
         CriacaoDeProduto criacaoDeProduto = new CriacaoDeProduto(repositorio, consultorDeCategoria);
-        CategoriaDto categoriaDto = new CategoriaDto("Categoria A");
-        ProdutoDto produtoDto = new ProdutoDto(id, nome, preco, quantidade, foto, categoriaDto);
+        CadastroDeProdutoDto produtoDto = new CadastroDeProdutoDto(nome, preco, quantidade, foto, idDaCategoria);
 
         criacaoDeProduto.criar(produtoDto);
 

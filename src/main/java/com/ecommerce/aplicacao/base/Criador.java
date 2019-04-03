@@ -7,5 +7,5 @@ import javassist.NotFoundException;
 
 public interface Criador<T> {
 
-    long criar(ObjetoDto<T> dto) throws ExcecaoDeAplicacao, ExcecaoDeDominio, NotFoundException;
+    long criar(CadastroDto<T> dto) throws ExcecaoDeAplicacao, ExcecaoDeDominio, NotFoundException;
 }

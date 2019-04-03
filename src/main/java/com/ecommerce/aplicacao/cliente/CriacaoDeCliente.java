@@ -2,7 +2,7 @@ package com.ecommerce.aplicacao.cliente;
 
 import com.ecommerce.aplicacao.CodificadorDeSenha;
 import com.ecommerce.aplicacao.ExcecaoDeAplicacao;
-import com.ecommerce.aplicacao.base.ObjetoDto;
+import com.ecommerce.aplicacao.base.CadastroDto;
 import com.ecommerce.dominio.ExcecaoDeDominio;
 import com.ecommerce.dominio.entidades.Cliente;
 import com.ecommerce.dominio.objetosdevalor.Endereco;
@@ -24,9 +24,9 @@ public class CriacaoDeCliente implements CriadorDeCliente {
     }
 
     @Override
-    public long criar(ObjetoDto<Cliente> dto) throws ExcecaoDeAplicacao {
-        ClienteDto clienteDto = (ClienteDto) dto;
-        EnderecoDto enderecoDto = clienteDto.getEndereco();
+    public long criar(CadastroDto<Cliente> dto) throws ExcecaoDeAplicacao {
+        CadastroDeClienteDto clienteDto = (CadastroDeClienteDto) dto;
+        CadastroDeEnderecoDto enderecoDto = clienteDto.getEndereco();
 
         if (enderecoDto == null)
             throw new ExcecaoDeAplicacao("O endereço não foi informado");
